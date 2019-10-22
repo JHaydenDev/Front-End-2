@@ -14,7 +14,8 @@ function CandidateList(props) {
         candidates.map(candidate => {
             return (
                 <>
-                <CandidateCard key={candidate.id} name={candidate.name} portrait={candidate.portrait} party={candidate.party} description={candidate.description} />
+                <CandidateCard key={candidate.id} name={candidate.name} portrait={candidate.portrait} party={candidate.party} 
+                description={candidate.description} guess={props.guess} setGuess={props.setGuess} />
                 </>
             )
         })

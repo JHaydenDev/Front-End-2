@@ -2,31 +2,71 @@ import React from "react";
 import styled from "styled-components";
 
 const CardDiv = styled.div`
-display: flex;
-width: 600px;
-border: 1px solid black;
+    display: flex;
+    width: 475px;
+    height: 150px;
+    border: 2px solid black;
+    border-radius: 75px 5px 40px 75px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    margin: 15px auto;
 `;
 
 const Portrait = styled.img`
-width: 200px;
-border-radius: 50%;
-border: 2px solid black;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
 `;
 
 const Blurb = styled.div`
-    width: 400px;
-    padding: .5em;
-    border: 1px solid black;
+    width: 300px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 `;
 
+const CardName = styled.h2`
+    margin: 0;
+    font-size: 1.5rem;
+`;
+
+const CardText = styled.p`
+    margin: 0;
+    font-size: .85rem;
+`;
+
+const CardButton = styled.button`
+    width: 70px;
+    height: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: .2em;
+    background-color: midnightblue;
+    color: white;
+`;
+
+
 const CandidateCard = props => {
+    
+    function tryGuess() {
+        if (props.guess == "") {
+            props.setGuess(props.name);
+            console.log(`Click: ${props.name}`);
+        }
+    }
+
     return (
         <CardDiv>
             <Portrait src={props.portrait}></Portrait>
             <Blurb>
-                <h1>{props.name}</h1>
-                <p>Party: {props.party}</p>
-                <p>{props.description}</p>
+                <CardName>{props.name}</CardName>
+                <CardText>Party: {props.party}</CardText>
+                <CardText>{props.description}</CardText>
+                <CardButton onClick={tryGuess}>Guess</CardButton>
             </Blurb>
         </CardDiv>
     )

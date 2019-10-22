@@ -3,17 +3,57 @@ import axios from "axios";
 import styled from "styled-components";
 import CandidateList from './CandidateList';
 import CandidateData from './CandidateData';
+import PlayerCard from './PlayerCard';
 
-const PeopleList = styled.div`
-width: 600px;
-margin: 2em auto;
+const GameTitle = styled.h2`
+    font-size: 2em;
+`;
+
+const GameDiv = styled.div`
+    width: 1500px;
+    border: 1px solid black;
+    display: flex;
+    margin: auto;
+`;
+
+const PlayDiv = styled.div`
+    width: 1100px;
+    display: flex;
+    flex-direction: column;
+`
+
+const StatusScreen = styled.div`
+    width: 1100px;
+    height: 200px;
+    border: 1px solid black;
+    font-size: 1.2rem;
+`;
+
+const TweetText = styled.p`
+    font-size: 1.5rem;
+`;
+
+const CandidateScreen = styled.div`
+    width: 1100px;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid black;
+`;
+
+const PlayerDiv = styled.div`
+    width: 400px;
+    border: 1px solid black;
+    font-size: 1.2rem;
 `;
 
 
 function TwitterGame() {
-    const [randomList, setRandomList] = useState(CandidateData);
+    const [randomList, setRandomList] = useState([]);
     const [tweet, setTweet] = useState("");
     const [mysteryCandidate, setMysteryCandidate] = useState({});
+    const [guess, setGuess] = useState("");
+    const [playerList, setPlayerList] = useState([{id: 1, name: "Host", points: 0}])
+    const [activePlayer, setActivePlayer] = useState({});
 
 
     useEffect(() => {
@@ -28,12 +68,26 @@ function TwitterGame() {
         
     }, [mysteryCandidate]);
 
+    useEffect(() => {
+        if (guess === "") {
+            console.log("nothing");
+        } else if (guess === mysteryCandidate.name) {
+            alert(`Correct! Your guess was: ${guess}.`);
+            var mylist = generateList();
+            setRandomList(mylist);
+        } else {
+            alert(`Incorrect! Your guess was ${guess}. The correct answer was ${mysteryCandidate.name}.`);
+            var mylist = generateList();
+            setRandomList(mylist);
+        }
+    }, [guess]);
+
     function generateList() {
         // Duplicate Candidate Data
         var tempList = [...CandidateData];
 
         // Shorten the list to 5
-        for (var i = 0; i < 18; i++) {
+        for (var i = 0; i < 17; i++) {
             tempList.splice(Math.floor(Math.random()*tempList.length),1)
         }
 
@@ -49,24 +103,52 @@ function TwitterGame() {
         return tempList;
     }
 
-    const submitForm = event => {
+    const startGame = event => {
         event.preventDefault();
         var mylist = generateList();
         setRandomList(mylist);
     };
 
+    function playGame() {
+        // var element = document.querySelector(GameTitle);
+        // element.innerText = "Game is Running";
+
+        while (true) {
+
+        }
+    }
+
     return (
         <div className="App">
-            <h2>Guess the Tweeter:</h2>
-            <p>{tweet}</p>
-            <form onSubmit={submitForm}>
-                <button type="submit">Generate</button>
+            <GameTitle>Guess the Tweeter:</GameTitle>
+            
+            <form onSubmit={startGame}>
+                <button type="button">Add Player</button>
+                <input></input><br/>
+                <button type="submit">Start Game</button>
             </form>
-            <PeopleList>
-                <CandidateList data={randomList}/>
-
-                
-            </PeopleList>
+            <GameDiv>
+                <PlayDiv>
+                    <StatusScreen>
+                        <TweetText>Tweet: {tweet}</TweetText>
+                        <p>Player Turn: {activePlayer.Name}</p>
+                    </StatusScreen>
+                    <CandidateScreen>
+                        <CandidateList data={randomList} guess="" setGuess={setGuess}/>
+                    </CandidateScreen>
+                </PlayDiv>
+                <PlayerDiv>
+                    <p>Players:</p>
+                    {playerList.map(player => {
+                        return (
+                            <>
+                            <PlayerCard name={player.name} points={player.points}/>
+                            </>
+                        )})}
+                </PlayerDiv>
+            </GameDiv>
+            
+            
             
         </div>
     );
