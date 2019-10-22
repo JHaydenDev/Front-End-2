@@ -4,6 +4,7 @@ import styled from "styled-components";
 import CandidateList from './CandidateList';
 import CandidateData from './CandidateData';
 import PlayerCard from './PlayerCard';
+import NewPlayerForm from './NewPlayerForm';
 
 const GameTitle = styled.h2`
     font-size: 2em;
@@ -33,6 +34,10 @@ const TweetText = styled.p`
     font-size: 1.5rem;
 `;
 
+const StatusText = styled.div`
+    font-size: 1.5rem;
+`;
+
 const CandidateScreen = styled.div`
     width: 1100px;
     display: flex;
@@ -52,7 +57,7 @@ function TwitterGame() {
     const [tweet, setTweet] = useState("");
     const [mysteryCandidate, setMysteryCandidate] = useState({});
     const [guess, setGuess] = useState("");
-    const [playerList, setPlayerList] = useState([{id: 1, name: "Host", points: 0}])
+    const [playerList, setPlayerList] = useState([{ id: 0, name: "Host", points: 0}])
     const [activePlayer, setActivePlayer] = useState({});
 
 
@@ -68,19 +73,19 @@ function TwitterGame() {
         
     }, [mysteryCandidate]);
 
-    useEffect(() => {
-        if (guess === "") {
-            console.log("nothing");
-        } else if (guess === mysteryCandidate.name) {
-            alert(`Correct! Your guess was: ${guess}.`);
-            var mylist = generateList();
-            setRandomList(mylist);
-        } else {
-            alert(`Incorrect! Your guess was ${guess}. The correct answer was ${mysteryCandidate.name}.`);
-            var mylist = generateList();
-            setRandomList(mylist);
-        }
-    }, [guess]);
+    // useEffect(() => {
+    //     if (guess === "") {
+    //         console.log("nothing");
+    //     } else if (guess === mysteryCandidate.name) {
+    //         alert(`Correct! Your guess was: ${guess}.`);
+    //         var mylist = generateList();
+    //         setRandomList(mylist);
+    //     } else {
+    //         alert(`Incorrect! Your guess was ${guess}. The correct answer was ${mysteryCandidate.name}.`);
+    //         var mylist = generateList();
+    //         setRandomList(mylist);
+    //     }
+    // }, [guess]);
 
     function generateList() {
         // Duplicate Candidate Data
@@ -103,33 +108,94 @@ function TwitterGame() {
         return tempList;
     }
 
-    const startGame = event => {
-        event.preventDefault();
+    function startGame(){
         var mylist = generateList();
         setRandomList(mylist);
     };
 
+    function setUpBoard(){
+        var mylist = generateList();
+        setRandomList(mylist);
+    }
+
+
     function playGame() {
-        // var element = document.querySelector(GameTitle);
-        // element.innerText = "Game is Running";
+        var gameStatusDisplay = document.querySelector(StatusText);
+        gameStatusDisplay.innerText = "Game is setting up";
+        console.log("playing");
+
+        //initialize game
+        var currentPlayerID = -1;
+        var turns = 5;
+        var buttonPressed = false;
+        console.log("initializing");
 
         while (true) {
+            // set the active player
+            console.log("First while loop");
+            gameStatusDisplay.innerText = "Cycling Players";
+            if (currentPlayerID < playerList.length) {
+                currentPlayerID += 1;
+                setActivePlayer(playerList[currentPlayerID]);
+            } else {
+                currentPlayerID = 0;
+                setActivePlayer(playerList[currentPlayerID]);
+                turns -= 1;
+            }
 
+            // Stop Game if turns have run out
+            if (turns <= 0) {
+                console.log("stop game");
+                break;
+            }
+
+            // Choose 6 candidates and a random tweet
+            setUpBoard()
+            console.log("setting board");
+
+            // Ask user to choose a candidate
+            // Wait for choice
+            while (!buttonPressed) {
+                console.log("second while loop");
+                gameStatusDisplay.innerText = `${activePlayer.name}, please guess which candidate tweeted the below tweet.`;
+                if (guess != "") {
+                    console.log("guess activated");
+                    if (guess === mysteryCandidate.name) {
+                        alert(`Correct! Your guess was: ${guess}.`);
+                        playerList[currentPlayerID]['points'] += 1;
+                        setGuess("");
+                        break;
+                    } else {
+                        alert(`Incorrect! Your guess was ${guess}. The correct answer was ${mysteryCandidate.name}.`);
+                        setGuess("");
+                        break;
+                    }
+                }
+            }
+            setPlayerList(...playerList);
+            console.log("updating player list");
         }
+        console.log("end game");
+        gameStatusDisplay.innerText = `Game has ended`;
     }
+
+
+
+
+    const addPlayer = player => {
+        setPlayerList([...playerList, player]);
+    };
 
     return (
         <div className="App">
             <GameTitle>Guess the Tweeter:</GameTitle>
-            
-            <form onSubmit={startGame}>
-                <button type="button">Add Player</button>
-                <input></input><br/>
-                <button type="submit">Start Game</button>
-            </form>
+            <NewPlayerForm addPlayer={addPlayer} />
+            <button type="button" onClick={playGame}>Start Game</button>
+            <button>Next Player</button>
             <GameDiv>
                 <PlayDiv>
                     <StatusScreen>
+                        <StatusText>Test</StatusText>
                         <TweetText>Tweet: {tweet}</TweetText>
                         <p>Player Turn: {activePlayer.Name}</p>
                     </StatusScreen>
