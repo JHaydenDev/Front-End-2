@@ -209,5 +209,5 @@ export default [
         description: "U.S. representative from SC-01 (1995–2001, 2013–2019)",
         twitter: "MarkSanford",
     },
-    
+
 ];
