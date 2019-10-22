@@ -8,19 +8,21 @@ const PeopleList = styled.div`
 margin-left: 300px;
 `;
 
+
 function TwitterGame() {
     const [randomList, setRandomList] = useState(CandidateData);
 
 
-    useEffect(() => {
-        axios
-        .get('GET https://api.twitter.com/1.1/statuses/show.json?id=210462857140252672')
-        .then(response => {
-            console.log("test");
-            console.log(response);
-        })
+    // useEffect(() => {
+    //    axios.get('http://localhost:3000/').then(response=>{
+    //        console.log(response);
+    //    })
         
-    }, []);
+    // }, []);
+
+    // useEffect(() => {
+    //     ${randomList}
+    // }, [randomList])
 
     function generateList() {
         var tempList = [...CandidateData];
@@ -33,7 +35,8 @@ function TwitterGame() {
 
     const submitForm = event => {
         event.preventDefault();
-        setRandomList(generateList);
+        var mylist = generateList();
+        setRandomList(mylist);
     };
 
     return (

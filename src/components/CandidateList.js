@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CandidateCard from "./CandidateCard";
 import CandidateData from "./CandidateData";
 import styled from "styled-components";
 
 function CandidateList(props) {
-    const [candidates, setCandidates] = useState(props.data);
+    const [candidates, setCandidates] = useState([]);
+
+    useEffect(() => {
+        setCandidates(props.data);
+    }, [props.data])
 
     return(
         candidates.map(candidate => {
