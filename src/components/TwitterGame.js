@@ -5,31 +5,47 @@ import CandidateList from './CandidateList';
 import CandidateData from './CandidateData';
 
 const PeopleList = styled.div`
-margin-left: 300px;
+width: 600px;
+margin: 2em auto;
 `;
 
 
 function TwitterGame() {
     const [randomList, setRandomList] = useState(CandidateData);
+    const [tweet, setTweet] = useState("");
+    const [mysteryCandidate, setMysteryCandidate] = useState({});
 
 
-    // useEffect(() => {
-    //    axios.get('http://localhost:3000/').then(response=>{
-    //        console.log(response);
-    //    })
+    useEffect(() => {
+    axios.get(`http://localhost:4000/${mysteryCandidate.twitter}`)
+    .then(response=>{
+        console.log(response.data);
+        setTweet(response.data.statuses[0].text);
+    })
+    .catch(error => {
+        console.log("There was an error:", error);
+    })
         
-    // }, []);
-
-    // useEffect(() => {
-    //     ${randomList}
-    // }, [randomList])
+    }, [mysteryCandidate]);
 
     function generateList() {
+        // Duplicate Candidate Data
         var tempList = [...CandidateData];
-        var i;
-        for (i = 0; i < 3; i++) {
+
+        // Shorten the list to 5
+        for (var i = 0; i < 18; i++) {
             tempList.splice(Math.floor(Math.random()*tempList.length),1)
         }
+
+        // Shuffle the list
+        for (let i = tempList.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [tempList[i], tempList[j]] = [tempList[j], tempList[i]];
+        }
+
+        setMysteryCandidate(tempList[Math.floor(Math.random() * 4)])
+        console.log(mysteryCandidate);
+
         return tempList;
     }
 
@@ -41,7 +57,8 @@ function TwitterGame() {
 
     return (
         <div className="App">
-            <h1>Game!</h1>
+            <h2>Guess the Tweeter:</h2>
+            <p>{tweet}</p>
             <form onSubmit={submitForm}>
                 <button type="submit">Generate</button>
             </form>
