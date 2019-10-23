@@ -1,7 +1,20 @@
 var Twit = require('twit')
 
 var express = require('express')
+var cors = require('cors');
 var app = express()
+
+// from https://stackoverflow.com/a/52759059
+app.use('*', function(req, res, next) {
+res.header("Access-Control-Allow-Origin", "*");
+res.header("Access-Control-Allow-Headers", "X-Requested-With");
+res.header('Access-Control-Allow-Headers', 'Content-Type');
+res.header('Access-Control-Allow-Credentials', true);
+next(); 
+});
+
+//enable pre-flight
+app.options('*', cors());
 
 var T = new Twit({
     consumer_key: '5Mvy9kwLOmPR7KGwDt7YN2L0k',
@@ -36,12 +49,32 @@ function randomDate() {
     return `${genYear}-${fixedMonth()}-${fixedDay()}`;
 }
 
+<<<<<<< HEAD
 app.get('/amyklobuchar', function (req, res) {
     T.get('search/tweets', { q: `from:amyklobuchar until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
         res.send(data)
+=======
+function addHeaders(res){
+    // From https://www.chromium.org/Home/chromium-security/corb-for-developers
+    res.set({
+    'Content-Type': 'application/json',
+    'X-Content-Type-Options': 'nosniff',
+>>>>>>> dc9c428fd3c673a57cf8f82881330cebc71aa8b6
     })
+}
+
+function getTweets(search_string, res){
+    T.get('search/tweets', { q: `from:${search_string} until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
+        addHeaders(res);
+        res.send(JSON.stringify(data));
+    })
+}
+
+app.get('/amyklobuchar', function (req, res) {
+    getTweets('amyklobuchar', res)
 })
 app.get('/AndrewYang', function (req, res) {
+<<<<<<< HEAD
     T.get('search/tweets', { q: `from:AndrewYang until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
         res.send(data)
     })
@@ -157,3 +190,74 @@ console.log(randomDate());
 
 app.listen(4000)
 
+=======
+    getTweets('AndrewYang', res)
+})
+app.get('/BernieSanders', function (req, res) {
+    getTweets('BernieSanders', res)
+})
+app.get('/BetoORourke', function (req, res) {
+    getTweets('BetoORourke', res)
+})
+app.get('/CoryBooker', function (req, res) {
+    getTweets('CoryBooker', res)
+})
+app.get('/ewarren', function (req, res) {
+    getTweets('ewarren', res)
+})
+app.get('/JoeBiden', function (req, res) {
+    getTweets('JoeBiden', res)
+})
+app.get('/JoeSestak', function (req, res) {
+    getTweets('JoeSestak', res)
+})
+app.get('/JohnDelaney', function (req, res) {
+    getTweets('JohnDelaney', res)
+})
+app.get('/JulianCastro', function (req, res) {
+    getTweets('JulianCastro', res)
+})
+app.get('/KamalaHarris', function (req, res) {
+    getTweets('KamalaHarris', res)
+})
+app.get('/marwilliamson', function (req, res) {
+    getTweets('marwilliamson', res)
+})
+app.get('/MichaelBennet', function (req, res) {
+    getTweets('MichaelBennet', res)
+})
+app.get('/PeteButtigieg', function (req, res) {
+    getTweets('PeteButtigieg', res)
+})
+app.get('/GovernorBullock', function (req, res) {
+    getTweets('GovernorBullock', res)
+})
+app.get('/TimRyan', function (req, res) {
+    getTweets('TimRyan', res)
+})
+app.get('/TomSteyer', function (req, res) {
+    getTweets('TomSteyer', res)
+})
+app.get('/TulsiGabbard', function (req, res) {
+    getTweets('TulsiGabbard', res)
+})
+app.get('/WayneMessam', function (req, res) {
+    getTweets('WayneMessam', res)
+})
+app.get('/GovBillWeld', function (req, res) {
+    getTweets('GovBillWeld', res)
+})
+app.get('/realDonaldTrump', function (req, res) {
+    getTweets('realDonaldTrump', res)
+})
+app.get('/WalshFreedom', function (req, res) {
+    getTweets('WalshFreedom', res)
+})
+app.get('/MarkSanford', function (req, res) {
+    getTweets('MarkSanford', res)
+})
+
+const port = process.env.PORT;
+app.listen(port)
+ 
+>>>>>>> dc9c428fd3c673a57cf8f82881330cebc71aa8b6
