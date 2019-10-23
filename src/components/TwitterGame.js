@@ -1,18 +1,61 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import styled from "styled-components";
+import TwitterIcon from "../images/TwitterIcon.png";
 import CandidateList from './CandidateList';
 import CandidateData from './CandidateData';
 import PlayerCard from './PlayerCard';
 import NewPlayerForm from './NewPlayerForm';
 
+const GameHeader = styled.div`
+    display: flex;
+    margin: auto;
+    margin-top: 1em;
+    width: 40em;
+    justify-content: space-around;
+`;
+
 const GameTitle = styled.h2`
-    font-size: 2em;
+    @import url('https://fonts.googleapis.com/css?family=Patua+One|Roboto&display=swap');
+    font-family: 'Patua One', cursive;
+    font-size: 4rem;
+    margin: 0px;
+`;
+
+const GameImg = styled.img`
+    height: 5rem;
+    width: 5rem;
+`;
+
+const GameSubTitle = styled.p`
+    @import url('https://fonts.googleapis.com/css?family=Patua+One|Roboto&display=swap');
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 3em;
+`;
+
+const GameSetup = styled.div`
+
+`;
+
+const StartButton = styled.button`
+    width: 10em;
+    height: 2em;
+    font-size: 1.1rem;
+    @import url('https://fonts.googleapis.com/css?family=Patua+One|Roboto&display=swap');
+    font-family: 'Patua One', cursive;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: .2em;
+    background-color: #1DA1F2;
+    color: white;
 `;
 
 const GameDiv = styled.div`
     width: 1500px;
-    border: 1px solid black;
     display: flex;
     margin: auto;
 `;
@@ -26,29 +69,48 @@ const PlayDiv = styled.div`
 const StatusScreen = styled.div`
     width: 1100px;
     height: 200px;
-    border: 1px solid black;
     font-size: 1.2rem;
 `;
 
-const TweetText = styled.p`
+const StatusText = styled.div`
+    @import url('https://fonts.googleapis.com/css?family=Patua+One|Roboto&display=swap');
+    font-family: 'Roboto', sans-serif;
     font-size: 1.5rem;
+    margin: 1em 0;
 `;
 
-const StatusText = styled.div`
-    font-size: 1.5rem;
+const TweetText = styled.div`
+    @import url('https://fonts.googleapis.com/css?family=Patua+One|Roboto&display=swap');
+    font-family: 'Roboto', sans-serif;  
+    font-size: 1.2rem;
+    border: 1px solid black;
+    border-radius: 1em;
+    width: 600px
+    height: 100px;
+    margin: auto;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: .2em;
 `;
 
 const CandidateScreen = styled.div`
     width: 1100px;
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid black;
 `;
 
 const PlayerDiv = styled.div`
     width: 400px;
-    border: 1px solid black;
     font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+`;
+
+const PlayersText = styled.p`
+    @import url('https://fonts.googleapis.com/css?family=Patua+One|Roboto&display=swap');
+    font-family: 'Patua One', cursive;
+    font-size: 2rem;
 `;
 
 
@@ -76,10 +138,14 @@ function TwitterGame() {
             if (gameStarted === "started") {
                 // Update the top message
                 document.querySelector(StatusText).innerText = `It is ${playerList[currentPlayerID].name}'s turn! Please select which candidate you believe tweeted the below tweet:`;
+                document.querySelector(TweetText).style.display = "flex";
+                document.querySelector(GameSetup).style.display = "None";
             } else if (gameStarted === "ended") {
                 setRandomList([]);
                 setTweet("");
-                document.querySelector(StatusText).innerText = `Thanks for playing!`;
+                document.querySelector(StatusText).innerText = `Thanks for playing! Here are the winner(s): ${winnerCalc()} \n Hit refresh if you'd like to play again!`;
+                document.querySelector(StatusText).style.margin = "4.5em auto";
+                document.querySelector(TweetText).style.display = "None";
             }
         }, 10)
     }
@@ -140,15 +206,36 @@ function TwitterGame() {
         }
     };
 
+    function winnerCalc() {
+        var funcList = [...playerList];
+        var score = 0;
+        var winnerString = "";
+        for (var i in funcList) {
+            if (funcList[i].points > score) {
+                winnerString = funcList[i].name;
+                score = funcList[i].points;
+            } else if (funcList[i].points === score) {
+                winnerString = winnerString + " & " + funcList[i].name;
+            }
+        }
+        return(winnerString + ` with ${score} points!`)
+    }
+
     return (
         <div className="App">
-            <GameTitle>Guess the Tweeter:</GameTitle>
-            <NewPlayerForm addPlayer={addPlayer} />
-            <button type="button" onClick={startGame}>Start Game</button>
+            <GameHeader>
+                <GameTitle>Guess the Tweeter</GameTitle>
+                <GameImg src={TwitterIcon}/>
+            </GameHeader>
+            <GameSubTitle>A fun Twitter matching game!</GameSubTitle>
+            <GameSetup>
+                <NewPlayerForm addPlayer={addPlayer} />
+                <StartButton type="button" onClick={startGame}>Start Game</StartButton>
+            </GameSetup>
             <GameDiv>
                 <PlayDiv>
                     <StatusScreen>
-                        <StatusText>Press Start!</StatusText>
+                        <StatusText></StatusText>
                         <TweetText>{tweet}</TweetText>
                     </StatusScreen>
                     <CandidateScreen>
@@ -164,7 +251,7 @@ function TwitterGame() {
                     </CandidateScreen>
                 </PlayDiv>
                 <PlayerDiv>
-                    <p>Players:</p>
+                    <PlayersText>Current Players:</PlayersText>
                     {playerList.map(player => {
                         return (
                             <>
