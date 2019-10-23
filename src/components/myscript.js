@@ -49,17 +49,11 @@ function randomDate() {
     return `${genYear}-${fixedMonth()}-${fixedDay()}`;
 }
 
-<<<<<<< HEAD
-app.get('/amyklobuchar', function (req, res) {
-    T.get('search/tweets', { q: `from:amyklobuchar until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-=======
 function addHeaders(res){
     // From https://www.chromium.org/Home/chromium-security/corb-for-developers
     res.set({
     'Content-Type': 'application/json',
     'X-Content-Type-Options': 'nosniff',
->>>>>>> dc9c428fd3c673a57cf8f82881330cebc71aa8b6
     })
 }
 
@@ -74,123 +68,6 @@ app.get('/amyklobuchar', function (req, res) {
     getTweets('amyklobuchar', res)
 })
 app.get('/AndrewYang', function (req, res) {
-<<<<<<< HEAD
-    T.get('search/tweets', { q: `from:AndrewYang until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/BernieSanders', function (req, res) {
-    T.get('search/tweets', { q: `from:BernieSanders until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/BetoORourke', function (req, res) {
-    T.get('search/tweets', { q: `from:BetoORourke until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/CoryBooker', function (req, res) {
-    T.get('search/tweets', { q: `from:CoryBooker until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/ewarren', function (req, res) {
-    T.get('search/tweets', { q: `from:ewarren until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/JoeBiden', function (req, res) {
-    T.get('search/tweets', { q: `from:JoeBiden until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/JoeSestak', function (req, res) {
-    T.get('search/tweets', { q: `from:JoeSestak until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/JohnDelaney', function (req, res) {
-    T.get('search/tweets', { q: `from:JohnDelaney until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/JulianCastro', function (req, res) {
-    T.get('search/tweets', { q: `from:JulianCastro until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/KamalaHarris', function (req, res) {
-    T.get('search/tweets', { q: `from:KamalaHarris until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/marwilliamson', function (req, res) {
-    T.get('search/tweets', { q: `from:marwilliamson until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/MichaelBennet', function (req, res) {
-    T.get('search/tweets', { q: `from:MichaelBennet until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/PeteButtigieg', function (req, res) {
-    T.get('search/tweets', { q: `from:PeteButtigieg until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/GovernorBullock', function (req, res) {
-    T.get('search/tweets', { q: `from:GovernorBullock until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/TimRyan', function (req, res) {
-    T.get('search/tweets', { q: `from:TimRyan until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/TomSteyer', function (req, res) {
-    T.get('search/tweets', { q: `from:TomSteyer until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/TulsiGabbard', function (req, res) {
-    T.get('search/tweets', { q: `from:TulsiGabbard until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/WayneMessam', function (req, res) {
-    T.get('search/tweets', { q: `from:WayneMessam until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/GovBillWeld', function (req, res) {
-    T.get('search/tweets', { q: `from:GovBillWeld until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/realDonaldTrump', function (req, res) {
-    T.get('search/tweets', { q: `from:realDonaldTrump until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/WalshFreedom', function (req, res) {
-    T.get('search/tweets', { q: `from:WalshFreedom until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-app.get('/MarkSanford', function (req, res) {
-    T.get('search/tweets', { q: `from:MarkSanford until:${randomDate()} -filter:retweets`, count: 1 }, function (err, data, response) {
-        res.send(data)
-    })
-})
-
-
-console.log(randomDate());
-
-app.listen(4000)
-
-=======
     getTweets('AndrewYang', res)
 })
 app.get('/BernieSanders', function (req, res) {
@@ -260,4 +137,3 @@ app.get('/MarkSanford', function (req, res) {
 const port = process.env.PORT;
 app.listen(port)
  
->>>>>>> dc9c428fd3c673a57cf8f82881330cebc71aa8b6

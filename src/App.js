@@ -5,10 +5,10 @@ import TwitterGame from './components/TwitterGame';
 
 
 function App() {
-  return (
-    <div className="App">
-    <TwitterGame />
-	
+	return (
+		<div className="App">
+			<TwitterGame />
+
 
 		</div>
 	);
