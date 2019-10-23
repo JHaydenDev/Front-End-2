@@ -36,10 +36,23 @@ function randomDate() {
     return `${genYear}-${fixedMonth()}-${fixedDay()}`;
 }
 
-app.get('/amyklobuchar', function (req, res) {
-    T.get('search/tweets', { q: `from:amyklobuchar until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
+function addHeaders(res){
+    // From https://www.chromium.org/Home/chromium-security/corb-for-developers
+    res.set({
+    'Content-Type': 'application/json',
+    'X-Content-Type-Options': 'nosniff',
     })
+}
+
+function getTweets(search_string, res){
+    T.get('search/tweets', { q: `from:${search_string} until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
+        addHeaders(res);
+        res.send(data);
+    })
+}
+
+app.get('/amyklobuchar', function (req, res) {
+    getTweets('/amyklobuchar', res)
 })
 app.get('/AndrewYang', function (req, res) {
     T.get('search/tweets', { q: `from:AndrewYang until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
