@@ -152,7 +152,7 @@ function TwitterGame() {
     updateVariables();
 
     useEffect(() => {
-    axios.get(`http://localhost:4000/${mysteryCandidate.twitter}`)
+    axios.get(`https://access-twitter-api.herokuapp.com/${mysteryCandidate.twitter}`)
     .then(response=>{
         console.log(response.data);
         setTweet(response.data.statuses[0].text);
