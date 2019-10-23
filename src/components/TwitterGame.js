@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import styled from "styled-components";
+import {Motion, spring} from "react-motion";
 import TwitterIcon from "../images/TwitterIcon.png";
 import CandidateList from './CandidateList';
 import CandidateData from './CandidateData';
@@ -226,11 +227,17 @@ function TwitterGame() {
 
     return (
         <div className="App">
+            <Motion defaultStyle={{y: -200, opacity: 0}} style={{y: spring(0), opacity: spring(1)}}>
+            {(style) => (
+            <div style={{transform: `translateY(${style.y}px)`, opacity: style.opacity}}>
             <GameHeader>
                 <GameTitle>Guess the Tweeter</GameTitle>
                 <GameImg src={TwitterIcon}/>
             </GameHeader>
             <GameSubTitle>A fun Twitter matching game!</GameSubTitle>
+            </div>
+            )}
+            </Motion>
             <GameSetup>
                 <NewPlayerForm addPlayer={addPlayer} />
                 <StartButton type="button" onClick={startGame}>Start Game</StartButton>
