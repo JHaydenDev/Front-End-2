@@ -152,8 +152,5 @@ app.get('/MarkSanford', function (req, res) {
     })
 })
 
-
-console.log(randomDate());
-
 app.listen(4000)
  
