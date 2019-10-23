@@ -1,7 +1,20 @@
 var Twit = require('twit')
 
 var express = require('express')
+var cors = require('cors');
 var app = express()
+
+// from https://stackoverflow.com/a/52759059
+app.use('*', function(req, res, next) {
+res.header("Access-Control-Allow-Origin", "*");
+res.header("Access-Control-Allow-Headers", "X-Requested-With");
+res.header('Access-Control-Allow-Headers', 'Content-Type');
+res.header('Access-Control-Allow-Credentials', true);
+next(); 
+});
+
+//enable pre-flight
+app.options('*', cors());
 
 var T = new Twit({
     consumer_key:         '5Mvy9kwLOmPR7KGwDt7YN2L0k',
@@ -36,121 +49,91 @@ function randomDate() {
     return `${genYear}-${fixedMonth()}-${fixedDay()}`;
 }
 
-app.get('/amyklobuchar', function (req, res) {
-    T.get('search/tweets', { q: `from:amyklobuchar until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
+function addHeaders(res){
+    // From https://www.chromium.org/Home/chromium-security/corb-for-developers
+    res.set({
+    'Content-Type': 'application/json',
+    'X-Content-Type-Options': 'nosniff',
     })
+}
+
+function getTweets(search_string, res){
+    T.get('search/tweets', { q: `from:${search_string} until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
+        addHeaders(res);
+        res.send(JSON.stringify(data));
+    })
+}
+
+app.get('/amyklobuchar', function (req, res) {
+    getTweets('amyklobuchar', res)
 })
 app.get('/AndrewYang', function (req, res) {
-    T.get('search/tweets', { q: `from:AndrewYang until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('AndrewYang', res)
 })
 app.get('/BernieSanders', function (req, res) {
-    T.get('search/tweets', { q: `from:BernieSanders until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('BernieSanders', res)
 })
 app.get('/BetoORourke', function (req, res) {
-    T.get('search/tweets', { q: `from:BetoORourke until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('BetoORourke', res)
 })
 app.get('/CoryBooker', function (req, res) {
-    T.get('search/tweets', { q: `from:CoryBooker until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('CoryBooker', res)
 })
 app.get('/ewarren', function (req, res) {
-    T.get('search/tweets', { q: `from:ewarren until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('ewarren', res)
 })
 app.get('/JoeBiden', function (req, res) {
-    T.get('search/tweets', { q: `from:JoeBiden until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('JoeBiden', res)
 })
 app.get('/JoeSestak', function (req, res) {
-    T.get('search/tweets', { q: `from:JoeSestak until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('JoeSestak', res)
 })
 app.get('/JohnDelaney', function (req, res) {
-    T.get('search/tweets', { q: `from:JohnDelaney until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('JohnDelaney', res)
 })
 app.get('/JulianCastro', function (req, res) {
-    T.get('search/tweets', { q: `from:JulianCastro until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('JulianCastro', res)
 })
 app.get('/KamalaHarris', function (req, res) {
-    T.get('search/tweets', { q: `from:KamalaHarris until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('KamalaHarris', res)
 })
 app.get('/marwilliamson', function (req, res) {
-    T.get('search/tweets', { q: `from:marwilliamson until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('marwilliamson', res)
 })
 app.get('/MichaelBennet', function (req, res) {
-    T.get('search/tweets', { q: `from:MichaelBennet until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('MichaelBennet', res)
 })
 app.get('/PeteButtigieg', function (req, res) {
-    T.get('search/tweets', { q: `from:PeteButtigieg until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('PeteButtigieg', res)
 })
 app.get('/GovernorBullock', function (req, res) {
-    T.get('search/tweets', { q: `from:GovernorBullock until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('GovernorBullock', res)
 })
 app.get('/TimRyan', function (req, res) {
-    T.get('search/tweets', { q: `from:TimRyan until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('TimRyan', res)
 })
 app.get('/TomSteyer', function (req, res) {
-    T.get('search/tweets', { q: `from:TomSteyer until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('TomSteyer', res)
 })
 app.get('/TulsiGabbard', function (req, res) {
-    T.get('search/tweets', { q: `from:TulsiGabbard until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('TulsiGabbard', res)
 })
 app.get('/WayneMessam', function (req, res) {
-    T.get('search/tweets', { q: `from:WayneMessam until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('WayneMessam', res)
 })
 app.get('/GovBillWeld', function (req, res) {
-    T.get('search/tweets', { q: `from:GovBillWeld until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('GovBillWeld', res)
 })
 app.get('/realDonaldTrump', function (req, res) {
-    T.get('search/tweets', { q: `from:realDonaldTrump until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('realDonaldTrump', res)
 })
 app.get('/WalshFreedom', function (req, res) {
-    T.get('search/tweets', { q: `from:WalshFreedom until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('WalshFreedom', res)
 })
 app.get('/MarkSanford', function (req, res) {
-    T.get('search/tweets', { q: `from:MarkSanford until:${randomDate()} -filter:retweets`, count: 1 }, function(err, data, response) {
-        res.send(data)
-    })
+    getTweets('MarkSanford', res)
 })
 
-app.listen(4000)
+const port = process.env.PORT;
+app.listen(port)
  
