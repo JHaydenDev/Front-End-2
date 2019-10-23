@@ -62,17 +62,20 @@ function TwitterGame() {
     const [gameStarted, setGameStarted] = useState(false);
     const [turns, setTurns] = useState(5);
     const [currentPlayerID, setCurrentPlayerID] = useState(0);
-    var gameStatusDisplay = document.querySelector(StatusText);
 
     var x = 1;
 
     function updateVariables() {
         setTimeout(function() {
-                console.log(`active player: ${playerList[currentPlayerID].name}`);
-                console.log(`current player ID: ${currentPlayerID}`);
-                console.log(`turns: ${turns}`);
+
+            //Display some helpful variables
+            console.log(`active player: ${playerList[currentPlayerID].name}`);
+            console.log(`current player ID: ${currentPlayerID}`);
+            console.log(`turns: ${turns}`);
+
             if (gameStarted) {
-                gameStatusDisplay.innerText = `It is ${playerList[currentPlayerID].name}'s turn! Please select which candidate you believe tweeted the below tweet:`;
+                // Update the top message
+                document.querySelector(StatusText).innerText = `It is ${playerList[currentPlayerID].name}'s turn! Please select which candidate you believe tweeted the below tweet:`;
             }
         }, 10)
     }
@@ -138,7 +141,6 @@ function TwitterGame() {
             <GameTitle>Guess the Tweeter:</GameTitle>
             <NewPlayerForm addPlayer={addPlayer} />
             <button type="button" onClick={startGame}>Start Game</button>
-            <button>Next Player</button>
             <GameDiv>
                 <PlayDiv>
                     <StatusScreen>

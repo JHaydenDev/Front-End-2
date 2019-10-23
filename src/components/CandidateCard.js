@@ -77,7 +77,6 @@ const CandidateCard = props => {
             alert(`Incorrect! Your guess was ${props.name}. The correct answer was ${props.mysteryCandidate.name}.`);
             props.setUpBoard();
             console.log("guessed incorrectly");
-            props.playerList[props.currentPlayerID].points += 1;
             handleTurn()
         } else {
             alert(`Game over!`);
