@@ -27,7 +27,7 @@ class SignUp extends React.Component {
       // base of '/api/login' inside axiosWithAuth in utils folder
       .post("/api/login", this.state.credentials)
       .then(res => {
-        localStorage.setItem("token", res.data.payload) & console.log(res, "this");
+        localStorage.setItem("token", res.data.payload) ; console.log(res, "this");
         this.props.history.push("/protected");
       })
       .catch(err => console.log(err.response));

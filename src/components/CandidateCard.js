@@ -5,7 +5,7 @@ const CardDiv = styled.div`
     display: flex;
     width: 600px;
     // border: 1px solid black;
-    margin: 10px auto;
+    margin: 5vh auto;
 `;
 
 const Portrait = styled.img`
