@@ -7,6 +7,7 @@ import TwitterGame from './components/TwitterGame';
 function App() {
 	return (
 		<div className="App">
+			<Nav />
 			<TwitterGame />
 
 

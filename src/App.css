@@ -26,7 +26,7 @@ nav{
   justify-content: space-around;
   align-content: center;
   min-height: 10vh;
-  background: darkblue;
+  background: #1DA1F2;
   color: white;
   }
 
@@ -36,4 +36,19 @@ nav{
     justify-content: space-around;
     align-items: center;
     list-style: none;
+  }
+
+  .navbar-button {
+    width: 10em;
+    height: 2em;
+    font-size: 1.1rem;
+    @import url('https://fonts.googleapis.com/css?family=Patua+One|Roboto&display=swap');
+    font-family: 'Patua One', cursive;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: .2em;
+    background-color: #1DA1F2;
+    color: white;
   }
