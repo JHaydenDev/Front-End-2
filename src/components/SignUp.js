@@ -49,7 +49,7 @@ class SignUp extends React.Component {
             value={this.state.credentials.password}
             onChange={this.handleChange}
           />
-          <button>Log in</button>
+          <button>Sign Up</button>
         </form>
       </div>
     );
