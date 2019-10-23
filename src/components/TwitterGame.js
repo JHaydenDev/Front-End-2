@@ -59,7 +59,7 @@ function TwitterGame() {
     const [guess, setGuess] = useState("");
     const [playerList, setPlayerList] = useState([{ id: 0, name: "Host", points: 0}])
     //example list of players: { id: 0, name: "Host", points: 0}, { id: 1, name: "Bob", points: 0}, { id: 2, name: "Steve", points: 0}
-    const [gameStarted, setGameStarted] = useState(false);
+    const [gameStarted, setGameStarted] = useState("not started");
     const [turns, setTurns] = useState(5);
     const [currentPlayerID, setCurrentPlayerID] = useState(0);
 
@@ -73,9 +73,13 @@ function TwitterGame() {
             console.log(`current player ID: ${currentPlayerID}`);
             console.log(`turns: ${turns}`);
 
-            if (gameStarted) {
+            if (gameStarted === "started") {
                 // Update the top message
                 document.querySelector(StatusText).innerText = `It is ${playerList[currentPlayerID].name}'s turn! Please select which candidate you believe tweeted the below tweet:`;
+            } else if (gameStarted === "ended") {
+                setRandomList([]);
+                setTweet("");
+                document.querySelector(StatusText).innerText = `Thanks for playing!`;
             }
         }, 10)
     }
@@ -131,7 +135,7 @@ function TwitterGame() {
         if (playerList.length < 2) {
             alert("Please add more players!");
         } else {
-            setGameStarted(true);
+            setGameStarted("started");
             setUpBoard();
         }
     };

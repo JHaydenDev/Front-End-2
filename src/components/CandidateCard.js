@@ -80,6 +80,7 @@ const CandidateCard = props => {
             handleTurn()
         } else {
             alert(`Game over!`);
+            props.setGameStarted("ended");
         }
     }
 
