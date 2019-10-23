@@ -2,21 +2,22 @@ import React from "react";
 import styled from "styled-components";
 
 const CardDiv = styled.div`
-display: flex;
-width: 600px;
-border: 1px solid black;
+    display: flex;
+    width: 600px;
+    // border: 1px solid black;
+    margin: 10px auto;
 `;
 
 const Portrait = styled.img`
-width: 200px;
-border-radius: 50%;
-border: 2px solid black;
+    width: 200px;
+    border-radius: 50%;
+    // border: 2px solid black;
 `;
 
 const Blurb = styled.div`
     width: 400px;
     padding: .5em;
-    border: 1px solid black;
+    // border: 1px solid black;
 `;
 
 const CandidateCard = props => {
