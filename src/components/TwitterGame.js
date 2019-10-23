@@ -58,8 +58,25 @@ function TwitterGame() {
     const [mysteryCandidate, setMysteryCandidate] = useState({});
     const [guess, setGuess] = useState("");
     const [playerList, setPlayerList] = useState([{ id: 0, name: "Host", points: 0}])
-    const [activePlayer, setActivePlayer] = useState({});
+    //example list of players: { id: 0, name: "Host", points: 0}, { id: 1, name: "Bob", points: 0}, { id: 2, name: "Steve", points: 0}
+    const [gameStarted, setGameStarted] = useState(false);
+    const [turns, setTurns] = useState(5);
+    const [currentPlayerID, setCurrentPlayerID] = useState(0);
+    var gameStatusDisplay = document.querySelector(StatusText);
 
+    var x = 1;
+
+    function updateVariables() {
+        setTimeout(function() {
+                console.log(`active player: ${playerList[currentPlayerID].name}`);
+                console.log(`current player ID: ${currentPlayerID}`);
+                console.log(`turns: ${turns}`);
+            if (gameStarted) {
+                gameStatusDisplay.innerText = `It is ${playerList[currentPlayerID].name}'s turn! Please select which candidate you believe tweeted the below tweet:`;
+            }
+        }, 10)
+    }
+    updateVariables();
 
     useEffect(() => {
     axios.get(`http://localhost:4000/${mysteryCandidate.twitter}`)
@@ -73,19 +90,9 @@ function TwitterGame() {
         
     }, [mysteryCandidate]);
 
-    // useEffect(() => {
-    //     if (guess === "") {
-    //         console.log("nothing");
-    //     } else if (guess === mysteryCandidate.name) {
-    //         alert(`Correct! Your guess was: ${guess}.`);
-    //         var mylist = generateList();
-    //         setRandomList(mylist);
-    //     } else {
-    //         alert(`Incorrect! Your guess was ${guess}. The correct answer was ${mysteryCandidate.name}.`);
-    //         var mylist = generateList();
-    //         setRandomList(mylist);
-    //     }
-    // }, [guess]);
+    useEffect(() => {
+        
+    }, [guess]);
 
     function generateList() {
         // Duplicate Candidate Data
@@ -103,104 +110,51 @@ function TwitterGame() {
         }
 
         setMysteryCandidate(tempList[Math.floor(Math.random() * 4)])
-        console.log(mysteryCandidate);
 
         return tempList;
     }
 
-    function startGame(){
-        var mylist = generateList();
-        setRandomList(mylist);
-    };
-
     function setUpBoard(){
+        setGuess("");
         var mylist = generateList();
         setRandomList(mylist);
     }
-
-
-    function playGame() {
-        var gameStatusDisplay = document.querySelector(StatusText);
-        gameStatusDisplay.innerText = "Game is setting up";
-        console.log("playing");
-
-        //initialize game
-        var currentPlayerID = -1;
-        var turns = 5;
-        var buttonPressed = false;
-        console.log("initializing");
-
-        while (true) {
-            // set the active player
-            console.log("First while loop");
-            gameStatusDisplay.innerText = "Cycling Players";
-            if (currentPlayerID < playerList.length) {
-                currentPlayerID += 1;
-                setActivePlayer(playerList[currentPlayerID]);
-            } else {
-                currentPlayerID = 0;
-                setActivePlayer(playerList[currentPlayerID]);
-                turns -= 1;
-            }
-
-            // Stop Game if turns have run out
-            if (turns <= 0) {
-                console.log("stop game");
-                break;
-            }
-
-            // Choose 6 candidates and a random tweet
-            setUpBoard()
-            console.log("setting board");
-
-            // Ask user to choose a candidate
-            // Wait for choice
-            while (!buttonPressed) {
-                console.log("second while loop");
-                gameStatusDisplay.innerText = `${activePlayer.name}, please guess which candidate tweeted the below tweet.`;
-                if (guess != "") {
-                    console.log("guess activated");
-                    if (guess === mysteryCandidate.name) {
-                        alert(`Correct! Your guess was: ${guess}.`);
-                        playerList[currentPlayerID]['points'] += 1;
-                        setGuess("");
-                        break;
-                    } else {
-                        alert(`Incorrect! Your guess was ${guess}. The correct answer was ${mysteryCandidate.name}.`);
-                        setGuess("");
-                        break;
-                    }
-                }
-            }
-            setPlayerList(...playerList);
-            console.log("updating player list");
-        }
-        console.log("end game");
-        gameStatusDisplay.innerText = `Game has ended`;
-    }
-
-
-
 
     const addPlayer = player => {
         setPlayerList([...playerList, player]);
+    };
+
+    function startGame(){
+        if (playerList.length < 2) {
+            alert("Please add more players!");
+        } else {
+            setGameStarted(true);
+            setUpBoard();
+        }
     };
 
     return (
         <div className="App">
             <GameTitle>Guess the Tweeter:</GameTitle>
             <NewPlayerForm addPlayer={addPlayer} />
-            <button type="button" onClick={playGame}>Start Game</button>
+            <button type="button" onClick={startGame}>Start Game</button>
             <button>Next Player</button>
             <GameDiv>
                 <PlayDiv>
                     <StatusScreen>
-                        <StatusText>Test</StatusText>
-                        <TweetText>Tweet: {tweet}</TweetText>
-                        <p>Player Turn: {activePlayer.Name}</p>
+                        <StatusText>Press Start!</StatusText>
+                        <TweetText>{tweet}</TweetText>
                     </StatusScreen>
                     <CandidateScreen>
-                        <CandidateList data={randomList} guess="" setGuess={setGuess}/>
+                        <CandidateList data={randomList} guess={guess} setGuess={setGuess} 
+                        playerList={playerList} setPlayerList={setPlayerList}
+                        gameStarted={gameStarted} setGameStarted={setGameStarted}
+                        turns={turns} setTurns={setTurns}
+                        currentPlayerID={currentPlayerID} setCurrentPlayerID={setCurrentPlayerID}
+                        mysteryCandidate={mysteryCandidate} setMysteryCandidate={setMysteryCandidate}
+                        setUpBoard={setUpBoard}
+                        setTurns={setTurns}
+                        />
                     </CandidateScreen>
                 </PlayDiv>
                 <PlayerDiv>

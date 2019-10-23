@@ -15,7 +15,15 @@ function CandidateList(props) {
             return (
                 <>
                 <CandidateCard key={candidate.id} name={candidate.name} portrait={candidate.portrait} party={candidate.party} 
-                description={candidate.description} guess={props.guess} setGuess={props.setGuess} />
+                description={candidate.description} guess={props.guess} setGuess={props.setGuess} 
+                playerList={props.playerList} setPlayerList={props.setPlayerList}
+                gameStarted={props.gameStarted} setGameStarted={props.setGameStarted}
+                turns={props.turns} setTurns={props.setTurns}
+                currentPlayerID={props.currentPlayerID} setCurrentPlayerID={props.setCurrentPlayerID}
+                mysteryCandidate={props.mysteryCandidate} setMysteryCandidate={props.setMysteryCandidate}
+                setUpBoard={props.setUpBoard}
+                setTurns={props.setTurns}
+                />
                 </>
             )
         })

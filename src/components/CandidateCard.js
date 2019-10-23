@@ -51,11 +51,36 @@ const CardButton = styled.button`
 
 
 const CandidateCard = props => {
+
+    function handleTurn() {
+        if (props.currentPlayerID < (props.playerList.length - 1)) {
+            props.setCurrentPlayerID(props.currentPlayerID + 1);
+        } else {
+            props.setCurrentPlayerID(0);
+            props.setTurns(props.turns - 1 );
+        }
+    }
     
     function tryGuess() {
-        if (props.guess == "") {
-            props.setGuess(props.name);
-            console.log(`Click: ${props.name}`);
+        props.setGuess(props.name);
+
+        if (props.name === props.mysteryCandidate.name && props.turns > 0) {
+            alert(`Correct! Your guess was: ${props.name}.`);
+            props.setUpBoard();
+            console.log(`THIS IS THE PLAYER LIST: ${props.playerList}`);
+            console.log(`THIS IS THE PLAYER ID YOU WANT TO UPDATE ${props.playerList[props.currentPlayerID]}`);
+            console.log(props.playerList[props.currentPlayerID]);
+            console.log(`THESE ARE HIS POINTS: ${props.playerList[props.currentPlayerID].points}`);
+            props.playerList[props.currentPlayerID].points += 1;
+            handleTurn()
+        } else if (props.turns > 0) {
+            alert(`Incorrect! Your guess was ${props.name}. The correct answer was ${props.mysteryCandidate.name}.`);
+            props.setUpBoard();
+            console.log("guessed incorrectly");
+            props.playerList[props.currentPlayerID].points += 1;
+            handleTurn()
+        } else {
+            alert(`Game over!`);
         }
     }
 
