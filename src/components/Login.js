@@ -18,17 +18,18 @@ class Login extends React.Component {
     });
   };
 
-  login = e => {
+  login = (e, credentials) => {
     e.preventDefault();
     // login to retreive the JWT token
     // add the token to localStorage
     // route to /protected (whatever landing page)
     axiosWithAuth()
       // base of '/api/login' inside axiosWithAuth in utils folder
-      .post("/api/login", this.state.credentials)
+      .post("/api/login", credentials)
       .then(res => {
         localStorage.setItem("token", res.data.payload) ; console.log(res, "this");
-        this.props.history.push("/protected");
+        // this.props.history.push("/protected");
+        console.log("wooooooowwwww", res)
       })
       .catch(err => console.log(err.response));
   };
@@ -36,7 +37,7 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.login}>
+        <form onSubmit={e => this.login(e, this.state.credentials)}>
           <input
             type="text"
             name="username"
@@ -49,12 +50,11 @@ class Login extends React.Component {
             value={this.state.credentials.password}
             onChange={this.handleChange}
           />
-          <button>Log in</button>
+          <button>Log In</button>
         </form>
       </div>
     );
   }
 }
-
 
 export default Login;
