@@ -36,16 +36,16 @@ const CardText = styled.p`
 `;
 
 const CardButton = styled.button`
-    width: 70px;
-    height: 30px;
-    font-size: 1rem;
-    font-weight: bold;
+    width: 7em;
+    height: 2em;
+    font-size: 1.1rem;
+    @import url('https://fonts.googleapis.com/css?family=Patua+One|Roboto&display=swap');
+    font-family: 'Patua One', cursive;
     margin-left: auto;
     margin-right: auto;
-    background-color: white;
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: .2em;
-    background-color: midnightblue;
+    background-color: #1DA1F2;
     color: white;
 `;
 
@@ -80,6 +80,7 @@ const CandidateCard = props => {
             handleTurn()
         } else {
             alert(`Game over!`);
+            props.setGameStarted("ended");
         }
     }
 
