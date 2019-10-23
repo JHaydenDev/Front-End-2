@@ -1,15 +1,18 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Nav from './components/Nav';
 import TwitterGame from './components/TwitterGame';
 
-function App() {
-  return (
-    <div className="App">
-    <TwitterGame />
 
-    </div>
-  );
+function App() {
+	return (
+		<div className="App">
+			<Nav />
+			<TwitterGame />
+
+
+		</div>
+	);
 }
 
 export default App;
