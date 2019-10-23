@@ -16,7 +16,6 @@ function Nav() {
         </nav>
         </Router>
     )
-
 }
 
 export default Nav;
