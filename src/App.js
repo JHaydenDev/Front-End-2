@@ -26,6 +26,7 @@ function App() {
 	return (
 		<div className="App">
 			<Nav />
+
 			<withRouter>
 				<Route exact path="/" render={props => (<Login {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginOrRegister={loginOrRegister} setLoginOrRegister={setLoginOrRegister}/>) } />
 			</withRouter>
@@ -33,6 +34,7 @@ function App() {
 				<Route exact path ="/TwitterGame" component={TwitterGame} />
 			</withRouter>
 			
+
 			
 
 		</div>
