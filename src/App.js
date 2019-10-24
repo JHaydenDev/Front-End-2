@@ -23,25 +23,13 @@ function App() {
 		}
 	}
 
-	function displayLoginOrRegister() {
-		if (loginOrRegister === "login") {
-			return (
-				<Login loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginOrRegister={loginOrRegister} setLoginOrRegister={setLoginOrRegister}/>
-			)
-		} else {
-			return(
-				<SignUp loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginOrRegister={loginOrRegister} setLoginOrRegister={setLoginOrRegister}/>
-			)
-		}
-	}
-
 	return (
 		<div className="App">
 			{test()}
 			<Nav />
-			<Route path="/" component={SignUp} />
-			<p>or</p>
-			<Route path="/" component={Login} />
+
+        <Route path="/" render={props => (<Login {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginOrRegister={loginOrRegister} setLoginOrRegister={setLoginOrRegister}/>)} />
+			
 			<PrivateRoute exact path ="/TwitterGame" component={TwitterGame} />
 
 		</div>

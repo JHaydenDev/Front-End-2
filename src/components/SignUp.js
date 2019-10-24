@@ -44,10 +44,11 @@ class SignUp extends React.Component {
 
   GoToLogin = () => {
     this.props.setLoginOrRegister("login");
+    console.log(this.props.loginOrRegister);
   }
 
   render() {
-    if(this.props.loggedInUser.username === "") {
+  if(this.props.loggedInUser.username === "") {
     return (
       <div>
         <form onSubmit={e => this.login(e, this.state.credentials)}>

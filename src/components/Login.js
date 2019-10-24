@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
+import SignUp from "./SignUp";
 
 class Login extends React.Component {
   state = {
@@ -46,11 +47,12 @@ class Login extends React.Component {
 
   GoToRegister = () => {
     this.props.setLoginOrRegister("register");
+    console.log(this.props.loginOrRegister);
   }
 
 
   render() {
-    if(this.props.loggedInUser.username === "") {
+  if(this.props.loggedInUser.username === "" && this.props.loginOrRegister === "login") {
       return (
         <div>
           <form onSubmit={e => this.login(e, this.state.credentials)}>
@@ -71,6 +73,11 @@ class Login extends React.Component {
           </form>
         </div>
       );
+    } else if (this.props.loggedInUser.username === "" && this.props.loginOrRegister === "register") {
+      return (
+        <SignUp loggedInUser={this.props.loggedInUser} setLoggedInUser={this.props.setLoggedInUser} loginOrRegister={this.props.loginOrRegister} setLoginOrRegister={this.props.setLoginOrRegister}/>
+      )
+
     } else {
       console.log("logged in");
       return (
