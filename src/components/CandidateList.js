@@ -23,6 +23,9 @@ function CandidateList(props) {
                 mysteryCandidate={props.mysteryCandidate} setMysteryCandidate={props.setMysteryCandidate}
                 setUpBoard={props.setUpBoard}
                 setTurns={props.setTurns}
+                randomList={props.data} setRandomList={props.setRandomList}
+                setTweet={props.setTweet}
+                loggedInUser={props.loggedInUser} setLoggedInUser={props.setLoggedInUser}
                 />
                 </>
             )

@@ -138,29 +138,24 @@ function TwitterGame(props) {
 
     var x = 1;
 
-    function updateVariables() {
-        setTimeout(function() {
+    // function updateVariables() {
+    //     if (gameStarted === "ended") {
+    //         setRandomList([]);
+    //         setTweet("");
+    //         document.querySelector(StatusText).innerText = `Thanks for playing! Here are the winner(s): ${winnerCalc()} \n Hit refresh if you'd like to play again!`;
+    //         document.querySelector(StatusText).style.margin = "4.5em auto";
+    //         document.querySelector(TweetText).style.display = "None";
+    //     } else if (gameStarted === "started") {
+    //     setTimeout(function() {
 
-            //Display some helpful variables
-            //console.log(`active player: ${playerList[currentPlayerID].name}`);
-            //console.log(`current player ID: ${currentPlayerID}`);
-            //console.log(`turns: ${turns}`);
-
-            if (gameStarted === "started") {
-                // Update the top message
-                document.querySelector(StatusText).innerText = `It is ${playerList[currentPlayerID].name}'s turn! Please select which candidate you believe tweeted the below tweet:`;
-                document.querySelector(TweetText).style.display = "flex";
-                document.querySelector(GameSetup).style.display = "None";
-            } else if (gameStarted === "ended") {
-                setRandomList([]);
-                setTweet("");
-                document.querySelector(StatusText).innerText = `Thanks for playing! Here are the winner(s): ${winnerCalc()} \n Hit refresh if you'd like to play again!`;
-                document.querySelector(StatusText).style.margin = "4.5em auto";
-                document.querySelector(TweetText).style.display = "None";
-            }
-        }, 10)
-    }
-    updateVariables();
+    //             // Update the top message
+    //             document.querySelector(StatusText).innerText = `It is ${playerList[currentPlayerID].name}'s turn! Please select which candidate you believe tweeted the below tweet:`;
+    //             document.querySelector(TweetText).style.display = "flex";
+    //             document.querySelector(GameSetup).style.display = "None";
+    //     }, 10)
+    //     }
+    // }
+    // updateVariables();
 
     useEffect(() => {
     var axios_instance = axios.create({
@@ -178,8 +173,20 @@ function TwitterGame(props) {
     }, [mysteryCandidate]);
 
     useEffect(() => {
+        if (gameStarted === "ended") {
+            document.querySelector(StatusText).innerText = `Thanks for playing! Here are the winner(s): ${winnerCalc()} \n Hit refresh if you'd like to play again!`;
+            document.querySelector(StatusText).style.margin = "4.5em auto";
+            document.querySelector(TweetText).style.display = "None";
+        } else if (gameStarted === "started") {
+            // Update the top message
+            document.querySelector(StatusText).innerText = `It is ${playerList[currentPlayerID].name}'s turn! Please select which candidate you believe tweeted the below tweet:`;
+            document.querySelector(TweetText).style.display = "flex";
+            document.querySelector(GameSetup).style.display = "None";
+        } else {
+            console.log("nothing");
+        }
         
-    }, [guess]);
+    }, );
 
     function generateList() {
         // Duplicate Candidate Data
@@ -267,7 +274,7 @@ function TwitterGame(props) {
                             <TweetText>{tweet}</TweetText>
                         </StatusScreen>
                         <CandidateScreen>
-                            <CandidateList data={randomList} guess={guess} setGuess={setGuess} 
+                            <CandidateList data={randomList} setRandomList={setRandomList} guess={guess} setGuess={setGuess} 
                             playerList={playerList} setPlayerList={setPlayerList}
                             gameStarted={gameStarted} setGameStarted={setGameStarted}
                             turns={turns} setTurns={setTurns}
@@ -275,6 +282,8 @@ function TwitterGame(props) {
                             mysteryCandidate={mysteryCandidate} setMysteryCandidate={setMysteryCandidate}
                             setUpBoard={setUpBoard}
                             setTurns={setTurns}
+                            setTweet={setTweet}
+                            loggedInUser={props.loggedInUser} setLoggedInUser={props.setLoggedInUser}
                             />
                         </CandidateScreen>
                     </PlayDiv>
@@ -286,7 +295,6 @@ function TwitterGame(props) {
                                 <PlayerCard name={player.name} points={player.points}/>
                                 </>
                             )})}
-                               <DeletePlayerForm deletePlayer />
                     </PlayerDiv>
                 </GameDiv>
                 

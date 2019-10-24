@@ -47,14 +47,15 @@ const DeletePlayerForm = props => {
     const [message, setMessage] = useState('');
     const handleSubmit = (values, tools) => {
         //axios.post('https://arcane-headland-50299.herokuapp.com/login', values)
-        axios.post('https://bw-guess-who.herokuapp.com/api/delete', values)
+        axios.delete(`https://bw-guess-who.herokuapp.com/api/users/`, { data: props.loggedInUser })
         .then(response => {
             console.log(response);
-            var returnedUser = response.data.user;
-            props.setLoggedInUser("");
+            // var returnedUser = response.data.user;
+            // props.setLoggedInUser("");
         })
         .catch(error => {
             setMessage("Incorrect username / password");
+            console.log(error);
         })
         .finally(() => {
             tools.setSubmitting(false);
