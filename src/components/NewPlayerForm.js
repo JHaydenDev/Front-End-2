@@ -68,7 +68,7 @@ const NewPlayerForm = props => {
                     value={player.name}
                 />
             </NameDiv>
-            <NewPlayerButton type="submit">Add New Player</NewPlayerButton>
+            <NewPlayerButton type="submit">Add Guest</NewPlayerButton>
         </PlayerForm>
     );
     };
