@@ -13,6 +13,7 @@ function App() {
 		points: 0,
 		username: "",
 	})
+	const [loginOrRegister, setLoginOrRegister] = useState("login");
 
 	function test(){
 		if (loggedInUser.username !== "") {
@@ -20,12 +21,24 @@ function App() {
 		}
 	}
 
+	function displayLoginOrRegister() {
+		if (loginOrRegister === "login") {
+			return (
+				<Login loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginOrRegister={loginOrRegister} setLoginOrRegister={setLoginOrRegister}/>
+			)
+		} else {
+			return(
+				<SignUp loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginOrRegister={loginOrRegister} setLoginOrRegister={setLoginOrRegister}/>
+			)
+		}
+	}
+
 	return (
 		<div className="App">
 			{test()}
 			<Nav />
-			<Login loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>
-
+			{displayLoginOrRegister()}
+			
 
 		</div>
 	);
