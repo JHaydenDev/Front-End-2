@@ -236,9 +236,9 @@ function TwitterGame(props) {
 
     if (props.loggedInUser.username === "") {
         return(
-            <div>
-                Please login to play!
-            </div>
+        <div className="welcome-div">
+            <p className="welcome-text">Please log-in to start a game.</p>
+        </div>
         )
     } else {
         return (
