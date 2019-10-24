@@ -8,12 +8,6 @@ class Login extends React.Component {
       username: "",
       password: ""
     },
-    loggedInUser: {
-      id: 0,
-      level: "",
-      points: 0,
-      username: "Host",
-    }
   };
 
   handleChange = e => {
@@ -51,6 +45,11 @@ class Login extends React.Component {
       .catch(err => console.log(err.response));
   };
 
+  GoToRegister = () => {
+    this.props.setLoginOrRegister("register");
+  }
+
+
   render() {
     if(this.props.loggedInUser.username === "") {
       return (
@@ -68,7 +67,8 @@ class Login extends React.Component {
               value={this.state.credentials.password}
               onChange={this.handleChange}
             />
-            <button>Log In</button>
+            <button>Log In</button><br/>
+            <button name="register" type="button" onClick={this.GoToRegister}>Click Here to Sign Up</button>
           </form>
         </div>
       );

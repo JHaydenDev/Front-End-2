@@ -25,16 +25,21 @@ class SignUp extends React.Component {
     // route to /protected (whatever landing page)
     axiosWithAuth()
       // base of '/api/login' inside axiosWithAuth in utils folder
-      .post("/api/login", credentials)
+      .post("https://bw-guess-who.herokuapp.com/api/register", credentials)
       .then(res => {
         localStorage.setItem("token", res.data.payload) ; console.log(res, "this");
         // this.props.history.push("/protected");
-        console.log("wooooooowwwww", res)
+        console.log(res)
       })
       .catch(err => console.log(err.response));
   };
 
+  GoToLogin = () => {
+    this.props.setLoginOrRegister("login");
+  }
+
   render() {
+    if(this.props.loggedInUser.username === "") {
     return (
       <div>
         <form onSubmit={e => this.login(e, this.state.credentials)}>
@@ -51,9 +56,17 @@ class SignUp extends React.Component {
             onChange={this.handleChange}
           />
           <button>Sign Up</button>
+          <button>Log In</button><br/>
+            <button name="register" type="button" onClick={this.GoToLogin}>Click Here to Login</button>
         </form>
       </div>
     );
+    } else {
+      return (
+        <div>You are already logged in as {this.props.loggedInUser.username}</div>
+      )
+      
+    }
   }
 }
 
