@@ -30,6 +30,14 @@ class SignUp extends React.Component {
         localStorage.setItem("token", res.data.payload) ; console.log(res, "this");
         // this.props.history.push("/protected");
         console.log(res)
+        var info = res.data;
+        this.props.setLoggedInUser({
+          id: info.id,
+          level: info.level,
+          points: info.points,
+          username: info.username,
+        })
+        console.log(this.props.loggedInUser);
       })
       .catch(err => console.log(err.response));
   };
@@ -56,7 +64,7 @@ class SignUp extends React.Component {
             onChange={this.handleChange}
           />
           <button>Sign Up</button>
-          <button>Log In</button><br/>
+          <br/>
             <button name="register" type="button" onClick={this.GoToLogin}>Click Here to Login</button>
         </form>
       </div>
