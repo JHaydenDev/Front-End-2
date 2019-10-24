@@ -8,6 +8,7 @@ import CandidateData from './CandidateData';
 import PlayerCard from './PlayerCard';
 import NewPlayerForm from './NewPlayerForm';
 import LoginPlayerForm from './LoginPlayerForm';
+import DeletePlayerForm from './DeletePlayerForm';
 
 const GameHeader = styled.div`
     display: flex;
@@ -285,6 +286,7 @@ function TwitterGame(props) {
                                 <PlayerCard name={player.name} points={player.points}/>
                                 </>
                             )})}
+                               <DeletePlayerForm deletePlayer />
                     </PlayerDiv>
                 </GameDiv>
                 
