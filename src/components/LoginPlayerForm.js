@@ -70,7 +70,7 @@ const LoginPlayersForm = props => {
                     <Field name="password" type="password" placeholder="Password" style={{width: "13em", margin: ".5em", height: "1.5em"}} /><br />
                     <ErrorMessage name="password" component="div" style={{color: "red"}}/>
 
-                    <LoginButton type="submit" disabled={props.isSubmitting} style={{margin: "0 0 .5em 0"}}>{props.isSubmitting ? "Authenticating" : "Login Player"}</LoginButton>
+                    <LoginButton type="submit" disabled={props.isSubmitting} style={{margin: "0 0 .5em 0"}}>{props.isSubmitting ? "Authenticating" : "Add Player"}</LoginButton>
                 </Form>
                 </LoginDiv>
             )
