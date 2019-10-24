@@ -89,7 +89,6 @@ nav{
   align-items: center;
 }
 
-<<<<<<< HEAD
   .navbar-button {
     width: 10em;
     height: 2em;
@@ -104,9 +103,8 @@ nav{
     background-color: #1DA1F2;
     color: white;
   }
-=======
-.welcome-text {
-  font-family: 'Roboto', sans-serif;  
-  font-size: 1rem;
-}
->>>>>>> ccb8c6e63d3d35f82df19f6bd2072e6653637d62
+
+  .welcome-text {
+    font-family: 'Roboto', sans-serif;  
+    font-size: 1rem;
+  }

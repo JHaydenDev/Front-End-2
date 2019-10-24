@@ -6,6 +6,8 @@ import Nav from './components/Nav';
 import TwitterGame from './components/TwitterGame';
 import SignUp from "./components/SignUp"
 import Login from './components/Login';
+import UserGames from "./components/UserGames";
+import Dashboard from "./components/Dashboard";
 
 
 function App() {
@@ -33,6 +35,8 @@ function App() {
 			<withRouter>
 				<Route exact path ="/TwitterGame" render={props => (<TwitterGame {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />)} />
 			</withRouter>
+			<Route exact path ="/UserGames" component={UserGames}></Route>
+			<Route exact path ="/Dashboard" render={props => (<Dashboard {...props} loggedInUser={loggedInUser} />)} />
 			
 
 			
