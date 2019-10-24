@@ -77,6 +77,7 @@ const DeletePlayerForm = props => {
                     <ErrorMessage name="password" component="div" style={{color: "red"}}/>
 
                     <DeleteButton type="submit" disabled={props.isSubmitting} style={{margin: "0 0 .5em 0"}}>{props.isSubmitting ? "Authenticating" : "Delete Account"}</DeleteButton>
+
                 </Form>
                 </DeleteDiv>
             )

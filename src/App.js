@@ -37,6 +37,7 @@ function App() {
 			</withRouter>
 			<Route exact path ="/UserGames" component={UserGames}></Route>
 			<Route exact path ="/Dashboard" render={props => (<Dashboard {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>)} />
+
 			
 
 			
