@@ -51,28 +51,38 @@ class SignUp extends React.Component {
   if(this.props.loggedInUser.username === "") {
     return (
       <div>
-        <form onSubmit={e => this.login(e, this.state.credentials)}>
-          <input
-            type="text"
-            name="username"
-            value={this.state.credentials.username}
-            onChange={this.handleChange}
-          />
-          <input
-            type="password"
-            name="password"
-            value={this.state.credentials.password}
-            onChange={this.handleChange}
-          />
-          <button>Sign Up</button>
-          <br/>
-            <button name="register" type="button" onClick={this.GoToLogin}>Click Here to Login</button>
+        <form onSubmit={e => this.login(e, this.state.credentials)} className="login-form">
+          <div className="input-div">
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={this.state.credentials.username}
+              onChange={this.handleChange}
+              style={{width: "23em", height: "2em", margin: ".2em 0"}}
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={this.state.credentials.password}
+              onChange={this.handleChange}
+              style={{width: "23em", height: "2em", margin: ".2em 0"}}
+            />
+          </div>
+          <div className="button-div">
+            <button class="form-button">Sign Up</button>
+            <button name="register" type="button" onClick={this.GoToLogin} class="form-button">Click Here to Login</button>
+          </div>
         </form>
       </div>
     );
     } else {
       return (
-        <div>You are already logged in as {this.props.loggedInUser.username}</div>
+        <div className="welcome-div">
+          <p className="welcome-text">You are already logged in as {this.props.loggedInUser.username}.</p>
+          <p className="welcome-text">Click Play Game to start your game!</p>
+        </div>
       )
       
     }
