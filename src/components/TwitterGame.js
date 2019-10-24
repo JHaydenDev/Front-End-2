@@ -7,6 +7,7 @@ import CandidateList from './CandidateList';
 import CandidateData from './CandidateData';
 import PlayerCard from './PlayerCard';
 import NewPlayerForm from './NewPlayerForm';
+import LoginPlayerForm from './LoginPlayerForm';
 
 const GameHeader = styled.div`
     display: flex;
@@ -106,6 +107,9 @@ const PlayerDiv = styled.div`
     font-size: 1.2rem;
     display: flex;
     flex-direction: column;
+    position: fixed;
+    top: 7em;
+    right: 1em;
 `;
 
 const PlayersText = styled.p`
@@ -239,6 +243,7 @@ function TwitterGame() {
             )}
             </Motion>
             <GameSetup>
+                <LoginPlayerForm />
                 <NewPlayerForm addPlayer={addPlayer} />
                 <StartButton type="button" onClick={startGame}>Start Game</StartButton>
             </GameSetup>

@@ -134,6 +134,12 @@ app.get('/MarkSanford', function (req, res) {
     getTweets('MarkSanford', res)
 })
 
+app.post('/login', (req, res) => {
+    setTimeout(() => {
+        res.json({ message: `Welcome back, ${req.body}!`})
+    }, 2000)
+});
+
 const port = process.env.PORT;
 app.listen(port)
  
