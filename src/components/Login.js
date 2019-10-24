@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 class Login extends React.Component {
@@ -6,7 +6,7 @@ class Login extends React.Component {
     credentials: {
       username: "",
       password: ""
-    }
+    },
   };
 
   handleChange = e => {
@@ -25,35 +25,59 @@ class Login extends React.Component {
     // route to /protected (whatever landing page)
     axiosWithAuth()
       // base of '/api/login' inside axiosWithAuth in utils folder
-      .post("/api/login", credentials)
+      .post("https://bw-guess-who.herokuapp.com/api/login", credentials)
       .then(res => {
-        localStorage.setItem("token", res.data.payload) ; console.log(res, "this");
+        // localStorage.setItem("token", res.data.payload) ; console.log(res, "this");
         // this.props.history.push("/protected");
-        console.log("wooooooowwwww", res)
+        // console.log("wooooooowwwww", res)
+        console.log(this.props.loggedInUser);
+        console.log(res.data.user);
+        var info = res.data.user;
+        this.props.setLoggedInUser({
+            id: info.id,
+            level: info.level,
+            points: info.points,
+            username: info.username,
+        })
+        console.log(this.props.loggedInUser);
       })
       .catch(err => console.log(err.response));
   };
 
+  GoToRegister = () => {
+    this.props.setLoginOrRegister("register");
+  }
+
+
   render() {
-    return (
-      <div>
-        <form onSubmit={e => this.login(e, this.state.credentials)}>
-          <input
-            type="text"
-            name="username"
-            value={this.state.credentials.username}
-            onChange={this.handleChange}
-          />
-          <input
-            type="password"
-            name="password"
-            value={this.state.credentials.password}
-            onChange={this.handleChange}
-          />
-          <button>Log In</button>
-        </form>
-      </div>
-    );
+    if(this.props.loggedInUser.username === "") {
+      return (
+        <div>
+          <form onSubmit={e => this.login(e, this.state.credentials)}>
+            <input
+              type="text"
+              name="username"
+              value={this.state.credentials.username}
+              onChange={this.handleChange}
+            />
+            <input
+              type="password"
+              name="password"
+              value={this.state.credentials.password}
+              onChange={this.handleChange}
+            />
+            <button>Log In</button><br/>
+            <button name="register" type="button" onClick={this.GoToRegister}>Click Here to Sign Up</button>
+          </form>
+        </div>
+      );
+    } else {
+      console.log("logged in");
+      return (
+        <div>Logged in as {this.props.loggedInUser.username}</div>
+      )
+      
+    }
   }
 }
 
