@@ -79,8 +79,13 @@ const CandidateCard = props => {
             console.log("guessed incorrectly");
             handleTurn()
         } else {
-            alert(`Game over!`);
+            props.setRandomList([]);
+            props.setTweet("");
             props.setGameStarted("ended");
+            props.loggedInUser.points += props.playerList[0].points;
+            // document.querySelector(StatusText).innerText = `Thanks for playing! Here are the winner(s): ${winnerCalc()} \n Hit refresh if you'd like to play again!`;
+            // document.querySelector(StatusText).style.margin = "4.5em auto";
+            // document.querySelector(TweetText).style.display = "None";
         }
     }
 
