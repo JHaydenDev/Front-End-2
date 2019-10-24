@@ -53,29 +53,29 @@ next();
 app.options('*', cors());
 
 var T = new Twit({
-    consumer_key:         '5Mvy9kwLOmPR7KGwDt7YN2L0k',
-    consumer_secret:      'PdOnltBXQ7KCavmcVBPWESSJvHUREHBjirXvna48IVrkXz4iBg',
-    access_token:         '2861432285-6s8XJOO07yS7wKViPkfLnv0XYr6UFPjCZgd99LX',
-    access_token_secret:  'xn3gI93W5SWIjzrIEuKEqWFtDsLNBQ14BZDi4W65XKjPN',
-    timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
-    strictSSL:            true,     // optional - requires SSL certificates to be valid.
+    consumer_key: '5Mvy9kwLOmPR7KGwDt7YN2L0k',
+    consumer_secret: 'PdOnltBXQ7KCavmcVBPWESSJvHUREHBjirXvna48IVrkXz4iBg',
+    access_token: '2861432285-6s8XJOO07yS7wKViPkfLnv0XYr6UFPjCZgd99LX',
+    access_token_secret: 'xn3gI93W5SWIjzrIEuKEqWFtDsLNBQ14BZDi4W65XKjPN',
+    timeout_ms: 60 * 1000,  // optional HTTP request timeout to apply to all requests.
+    strictSSL: true,     // optional - requires SSL certificates to be valid.
 })
 
 function randomDate() {
     var endDate = new Date();
-    var startDate =  new Date(endDate.getTime() - (24*60*60*1000*7));
+    var startDate = new Date(endDate.getTime() - (24 * 60 * 60 * 1000 * 7));
     var generatedDate = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
     var genYear = generatedDate.getFullYear();
     var genMonth = (generatedDate.getMonth() + 1).toString();
     var genDay = (generatedDate.getDate()).toString();
-    var fixedMonth = function() {
+    var fixedMonth = function () {
         if (genMonth.length < 2) {
             return `0${genMonth}`;
         } else {
             return genMonth;
         }
     }
-    var fixedDay = function() {
+    var fixedDay = function () {
         if (genDay.length < 2) {
             return `0${genDay}`;
         } else {
