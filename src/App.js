@@ -16,8 +16,6 @@ function App() {
 			<p>or</p>
 			<Route path="/" component={Login} />
 			<PrivateRoute exact path ="/TwitterGame" component={TwitterGame} />
-
-
 		</div>
 	);
 }
