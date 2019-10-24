@@ -30,7 +30,7 @@ function App() {
 				<Route exact path="/" render={props => (<Login {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginOrRegister={loginOrRegister} setLoginOrRegister={setLoginOrRegister}/>) } />
 			</withRouter>
 			<withRouter>
-				<Route exact path ="/TwitterGame" component={TwitterGame} />
+				<Route exact path ="/TwitterGame" render={props => (<TwitterGame {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />)} />
 			</withRouter>
 			
 			
