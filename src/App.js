@@ -17,7 +17,7 @@ function App() {
 
 	function test(){
 		if (loggedInUser.username !== "") {
-			return(`This function signifies that you have logged in as a user and thus the elements of the page have been updated`);
+			return(`This signifies that you have logged in as a user and thus the elements of the page have been updated`);
 		}
 	}
 
