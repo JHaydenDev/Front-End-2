@@ -11,7 +11,7 @@ function Nav() {
         <nav>
             <img src={TwitterIcon} width="50" height="50"/>
             <ul className="nav-links">
-                <Link to="/TwitterGame">Play Game</Link>
+                <Link to="/TwitterGame" className="navbar-button">Play Game</Link>
                 <Link to="/" className="navbar-button">Login/Signup</Link>
             </ul>
         </nav>
