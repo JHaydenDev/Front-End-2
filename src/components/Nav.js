@@ -11,8 +11,8 @@ function Nav() {
         <nav>
             <img src={TwitterIcon} width="50" height="50"/>
             <ul className="nav-links">
-                <li>Start Game</li>
-                <button className="navbar-button"><li>Login/Sign Up</li></button>
+                <Link to="/TwitterGame">Play Game</Link>
+                <Link to="/" className="navbar-button">Login/Signup</Link>
             </ul>
         </nav>
         </Router>
