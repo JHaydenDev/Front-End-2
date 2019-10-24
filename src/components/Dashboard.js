@@ -3,15 +3,22 @@ import DeletePlayerForm from "./DeletePlayerForm";
 
 
 const Dashboard = props => {
+    if (props.loggedInUser.username === "") {
+        return (
+            <div>
+                <p>Please Login to view the Dashboard</p>
+            </div>
+        )
+    }
     return (
         <div>
             <p>
-                {props.loggedInUser.username}
+                Welcome, {props.loggedInUser.username}!
             </p>
             <p>
-               Points: {props.loggedInUser.points}
+               Your overall points: {props.loggedInUser.points}
             </p>
-            <DeletePlayerForm />
+            <DeletePlayerForm loggedInUser={props.loggedInUser} setLoggedInUser={props.setLoggedInUser}/>
         </div>
     )
 

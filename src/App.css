@@ -25,7 +25,7 @@
 
 nav{
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   align-content: center;
   min-height: 75px;
@@ -34,7 +34,7 @@ nav{
   }
 
 .nav-links{
-  width: 30%;
+  width: 50%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -89,7 +89,7 @@ nav{
   align-items: center;
 }
 
-  .navbar-button {
+  /* .navbar-button {
     width: 10em;
     height: 2em;
     font-size: 1.1rem;
@@ -102,7 +102,7 @@ nav{
     border-radius: .2em;
     background-color: #1DA1F2;
     color: white;
-  }
+  } */
 
 .welcome-text {
   font-family: 'Roboto', sans-serif;  
