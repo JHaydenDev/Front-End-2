@@ -28,7 +28,7 @@ function App() {
 			{test()}
 			<Nav />
 
-			<Route path="/" render={props => (<Login {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginOrRegister={loginOrRegister} setLoginOrRegister={setLoginOrRegister}/>)} />
+        <Route path="/" render={props => (<Login {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginOrRegister={loginOrRegister} setLoginOrRegister={setLoginOrRegister}/>)} />
 			
 			<PrivateRoute exact path ="/TwitterGame" component={TwitterGame} />
 
