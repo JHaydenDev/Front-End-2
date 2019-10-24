@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import TwitterIcon from "../images/TwitterIcon.png";
+import Login from "./Login";
 
 
 // Navigation bar components
