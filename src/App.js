@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch, withRouter } from "react-router-dom";
 import './App.css';
 import { PrivateRoute } from "./components/PrivateRoute";
 import Nav from './components/Nav';
@@ -25,12 +25,17 @@ function App() {
 
 	return (
 		<div className="App">
-			{test()}
 			<Nav />
 
-        <Route path="/" render={props => (<Login {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginOrRegister={loginOrRegister} setLoginOrRegister={setLoginOrRegister}/>)} />
+			<withRouter>
+				<Route exact path="/" render={props => (<Login {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginOrRegister={loginOrRegister} setLoginOrRegister={setLoginOrRegister}/>) } />
+			</withRouter>
+			<withRouter>
+				<Route exact path ="/TwitterGame" render={props => (<TwitterGame {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />)} />
+			</withRouter>
 			
-			<PrivateRoute exact path ="/TwitterGame" component={TwitterGame} />
+
+			
 
 		</div>
 	);
