@@ -9,6 +9,13 @@ const PlayerForm = styled.form`
     font-family: 'Patua One', cursive;
 `;
 
+const MessageDiv = styled.div`
+    @import url('https://fonts.googleapis.com/css?family=Patua+One|Roboto&display=swap');
+    font-family: 'Roboto', sans-serif;  
+    font-size: 1rem;
+    color: red;
+`;
+
 const NameDiv = styled.div`
     padding: .5em;
     width: 13em;
@@ -41,22 +48,24 @@ const NewPlayerButton = styled.button`
 `;
 
 const NewPlayerForm = props => {
-    const [player, setPlayer] = useState({
-        id: 1,
-        name: "",
-        points: 0
-    });
+    const [message, setMessage] = useState('');
     const changeHandler = event => {
-        setPlayer({ ...player, [event.target.name]: event.target.value });
+        props.setPlayer({ ...props.player, [event.target.name]: event.target.value });
     };
     const submitForm = event => {
         event.preventDefault();
-        props.addPlayer(player);
-        console.log(player);
-        setPlayer({ id: (player.id+1) ,name: "", points: 0 });
+        if (props.playerList.some(player => player.name === `guest - ${props.player.name}`)) {
+            setMessage(`${props.player.name} is already added.`);
+        } else {
+            setMessage(``);
+            props.addPlayer({ id: props.player.id ,name: `guest - ${props.player.name}`, points: 0 });
+            console.log(props.player);
+            props.setPlayer({ id: (props.player.id+1) ,name: "", points: 0 });
+        }
     };
     return (
         <PlayerForm onSubmit={submitForm}>
+            <MessageDiv>{message}</MessageDiv>
             <NameDiv>
                 <label htmlFor="name">Name:</label>
                 <PlayerInput
@@ -65,7 +74,7 @@ const NewPlayerForm = props => {
                     type="name"
                     plac eholder="Name"
                     onChange={changeHandler}
-                    value={player.name}
+                    value={props.player.name}
                 />
             </NameDiv>
             <NewPlayerButton type="submit">Add Guest</NewPlayerButton>

@@ -129,6 +129,11 @@ function TwitterGame() {
     const [gameStarted, setGameStarted] = useState("not started");
     const [turns, setTurns] = useState(5);
     const [currentPlayerID, setCurrentPlayerID] = useState(0);
+    const [player, setPlayer] = useState({
+        id: 1,
+        name: "",
+        points: 0
+    });
 
     var x = 1;
 
@@ -136,9 +141,9 @@ function TwitterGame() {
         setTimeout(function() {
 
             //Display some helpful variables
-            console.log(`active player: ${playerList[currentPlayerID].name}`);
-            console.log(`current player ID: ${currentPlayerID}`);
-            console.log(`turns: ${turns}`);
+            //console.log(`active player: ${playerList[currentPlayerID].name}`);
+            //console.log(`current player ID: ${currentPlayerID}`);
+            //console.log(`turns: ${turns}`);
 
             if (gameStarted === "started") {
                 // Update the top message
@@ -243,8 +248,8 @@ function TwitterGame() {
             )}
             </Motion>
             <GameSetup>
-                <LoginPlayerForm />
-                <NewPlayerForm addPlayer={addPlayer} />
+                <LoginPlayerForm addPlayer={addPlayer} player={player} setPlayer={setPlayer} playerList={playerList} />
+                <NewPlayerForm addPlayer={addPlayer} player={player} setPlayer={setPlayer} playerList={playerList} />
                 <StartButton type="button" onClick={startGame}>Start Game</StartButton>
             </GameSetup>
             <GameDiv>
