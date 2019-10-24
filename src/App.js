@@ -27,18 +27,11 @@ function App() {
 		<div className="App">
 			{test()}
 			<Nav />
-<<<<<<< HEAD
-			<Route path="/" component={SignUp} />
-			<p>or</p>
-			<Route path="/" component={Login} />
-			<PrivateRoute exact path ="/TwitterGame" component={TwitterGame} />
-=======
 
         <Route path="/" render={props => (<Login {...props} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} loginOrRegister={loginOrRegister} setLoginOrRegister={setLoginOrRegister}/>)} />
 			
 			<PrivateRoute exact path ="/TwitterGame" component={TwitterGame} />
 
->>>>>>> 484bbbbef006e8eeb9d2ff59f92035da69c73cbf
 		</div>
 	);
 }
