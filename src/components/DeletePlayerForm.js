@@ -51,6 +51,7 @@ const DeletePlayerForm = props => {
         .then(response => {
             console.log(response);
             var returnedUser = response.data.user;
+            props.setLoggedInUser("");
         })
         .catch(error => {
             setMessage("Incorrect username / password");
@@ -75,7 +76,8 @@ const DeletePlayerForm = props => {
                     <Field name="password" type="password" placeholder="Password" style={{width: "13em", margin: ".5em", height: "1.5em"}} /><br />
                     <ErrorMessage name="password" component="div" style={{color: "red"}}/>
 
-                    <DeleteButton type="submit" disabled={props.isSubmitting} style={{margin: "0 0 .5em 0"}}>{props.isSubmitting ? "Authenticating" : "Delete Player"}</DeleteButton>
+                    <DeleteButton type="submit" disabled={props.isSubmitting} style={{margin: "0 0 .5em 0"}}>{props.isSubmitting ? "Authenticating" : "Delete Account"}</DeleteButton>
+
                 </Form>
                 </DeleteDiv>
             )
