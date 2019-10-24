@@ -5,8 +5,9 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 
 const LoginDiv = styled.div`
     @import url('https://fonts.googleapis.com/css?family=Patua+One|Roboto&display=swap');
-    font-family: 'Patua One', cursive;
-    font-size: 1.2rem;
+    font-family: 'Roboto', sans-serif;  
+    font-size: 1rem;
+    color: red;
 `;
 
 const LoginButton = styled.button`
@@ -43,10 +44,23 @@ const validate = ({username, password}) => {
 }
 
 const LoginPlayersForm = props => {
+    const [message, setMessage] = useState('');
     const handleSubmit = (values, tools) => {
-        axios.post('http://localhost:4000/login', values)
+        axios.post('https://arcane-headland-50299.herokuapp.com/login', values)
         .then(response => {
-            console.log(response);
+            var returnedUser = response.data.message;
+            if (returnedUser.username == null) {
+                setMessage("Incorrect username / password");
+                
+            } else if(props.playerList.some(player => player.name === returnedUser.username)) {
+                setMessage(`${returnedUser.username} is already logged in.`);
+            } else {
+                setMessage("");
+                tools.resetForm();
+                props.addPlayer({ id: (props.player.id), name: returnedUser.username, points: 0 });
+                props.setPlayer({ id: (props.player.id+1) ,name: "", points: 0 });
+                //setMessage(`Logged in as ${returnedUser.username}`);
+            }
         })
         .catch(error => {
             console.log(error);
@@ -64,6 +78,7 @@ const LoginPlayersForm = props => {
         render={props => {
             return(
                 <LoginDiv>
+                <div>{message}</div>
                 <Form>
                     <Field name="username" type="text" placeholder="Username" style={{width: "13em", margin: ".5em", height: "1.5em"}}/><br />
                     <ErrorMessage name="username" component="div" style={{color: "red"}}/>

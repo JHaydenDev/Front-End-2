@@ -1,8 +1,44 @@
+var dummyLogins = 
+[
+    {
+        id: 1,
+        username: "Bob123",
+        password: "password123",
+        globalPoints: 5,
+    },
+    {
+        id: 2,
+        username: "DevelopersDevelopers",
+        password: "IUseBing",
+        globalPoints: 0,
+    },
+    {
+        id: 3,
+        username: "JasonJSON",
+        password: "pronouncedJaySon",
+        globalPoints: 3,
+    },
+    {
+        id: 4,
+        username: "REACTologist",
+        password: "PasswordComponent",
+        globalPoints: 0,
+    },
+    {
+        id: 5,
+        username: "HerokuShima",
+        password: "GETrequestDenied",
+        globalPoints: 5,
+    },
+];
+
 var Twit = require('twit')
 
 var express = require('express')
 var cors = require('cors');
 var app = express()
+
+app.use(express.json()) // for parsing application/json
 
 // from https://stackoverflow.com/a/52759059
 app.use('*', function(req, res, next) {
@@ -47,6 +83,16 @@ function randomDate() {
         }
     }
     return `${genYear}-${fixedMonth()}-${fixedDay()}`;
+}
+
+function checkLogin(user, pass) {
+    var matchedUser = {};
+    for (var i in dummyLogins) {
+        if (user === dummyLogins[i].username && pass === dummyLogins[i].password ) {
+            matchedUser = dummyLogins[i];
+        }
+    }
+    return matchedUser;
 }
 
 function addHeaders(res){
@@ -136,10 +182,14 @@ app.get('/MarkSanford', function (req, res) {
 
 app.post('/login', (req, res) => {
     setTimeout(() => {
-        res.json({ message: `Welcome back, ${req.body}!`})
+        var receivedUser = req.body.username;
+        var receivedPass = req.body.password;
+        res.json({ message: checkLogin(receivedUser, receivedPass)})
     }, 2000)
 });
 
 const port = process.env.PORT;
-app.listen(port)
+app.listen(port, () => {
+    console.log(port);
+});
  
