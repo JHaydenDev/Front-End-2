@@ -46,24 +46,23 @@ const validate = ({username, password}) => {
 const LoginPlayersForm = props => {
     const [message, setMessage] = useState('');
     const handleSubmit = (values, tools) => {
-        axios.post('https://arcane-headland-50299.herokuapp.com/login', values)
+        //axios.post('https://arcane-headland-50299.herokuapp.com/login', values)
+        axios.post('https://bw-guess-who.herokuapp.com/api/login', values)
         .then(response => {
-            var returnedUser = response.data.message;
-            if (returnedUser.username == null) {
-                setMessage("Incorrect username / password");
-                
-            } else if(props.playerList.some(player => player.name === returnedUser.username)) {
-                setMessage(`${returnedUser.username} is already logged in.`);
+            console.log(response);
+            var returnedUser = response.data.user;
+
+            if (props.playerList.some(player => player.name === returnedUser.username)) {
+            setMessage(`${returnedUser.username} is already logged in.`);
             } else {
-                setMessage("");
-                tools.resetForm();
-                props.addPlayer({ id: (props.player.id), name: returnedUser.username, points: 0 });
-                props.setPlayer({ id: (props.player.id+1) ,name: "", points: 0 });
-                //setMessage(`Logged in as ${returnedUser.username}`);
+            setMessage("");
+            tools.resetForm();
+            props.addPlayer({ id: (props.player.id), name: returnedUser.username, points: 0 });
+            props.setPlayer({ id: (props.player.id+1) ,name: "", points: 0 });
             }
         })
         .catch(error => {
-            console.log(error);
+            setMessage("Incorrect username / password");
         })
         .finally(() => {
             tools.setSubmitting(false);

@@ -119,12 +119,12 @@ const PlayersText = styled.p`
 `;
 
 
-function TwitterGame() {
+function TwitterGame(props) {
     const [randomList, setRandomList] = useState([]);
     const [tweet, setTweet] = useState("");
     const [mysteryCandidate, setMysteryCandidate] = useState({});
     const [guess, setGuess] = useState("");
-    const [playerList, setPlayerList] = useState([{ id: 0, name: "Host", points: 0}])
+    const [playerList, setPlayerList] = useState([{ id: 0, name: `${props.loggedInUser.username}`, points: 0}])
     //example list of players: { id: 0, name: "Host", points: 0}, { id: 1, name: "Bob", points: 0}, { id: 2, name: "Steve", points: 0}
     const [gameStarted, setGameStarted] = useState("not started");
     const [turns, setTurns] = useState(5);
@@ -234,57 +234,65 @@ function TwitterGame() {
         return(winnerString + ` with ${score} points!`)
     }
 
-    return (
-        <div className="App">
-            <Motion defaultStyle={{y: -200, opacity: 0}} style={{y: spring(0), opacity: spring(1)}}>
-            {(style) => (
-            <div style={{transform: `translateY(${style.y}px)`, opacity: style.opacity}}>
-            <GameHeader>
-                <GameTitle>Guess the Tweeter</GameTitle>
-                <GameImg src={TwitterIcon}/>
-            </GameHeader>
-            <GameSubTitle>A fun Twitter matching game!</GameSubTitle>
+    if (props.loggedInUser.username === "") {
+        return(
+            <div>
+                Please login to play!
             </div>
-            )}
-            </Motion>
-            <GameSetup>
-                <LoginPlayerForm addPlayer={addPlayer} player={player} setPlayer={setPlayer} playerList={playerList} />
-                <NewPlayerForm addPlayer={addPlayer} player={player} setPlayer={setPlayer} playerList={playerList} />
-                <StartButton type="button" onClick={startGame}>Start Game</StartButton>
-            </GameSetup>
-            <GameDiv>
-                <PlayDiv>
-                    <StatusScreen>
-                        <StatusText></StatusText>
-                        <TweetText>{tweet}</TweetText>
-                    </StatusScreen>
-                    <CandidateScreen>
-                        <CandidateList data={randomList} guess={guess} setGuess={setGuess} 
-                        playerList={playerList} setPlayerList={setPlayerList}
-                        gameStarted={gameStarted} setGameStarted={setGameStarted}
-                        turns={turns} setTurns={setTurns}
-                        currentPlayerID={currentPlayerID} setCurrentPlayerID={setCurrentPlayerID}
-                        mysteryCandidate={mysteryCandidate} setMysteryCandidate={setMysteryCandidate}
-                        setUpBoard={setUpBoard}
-                        setTurns={setTurns}
-                        />
-                    </CandidateScreen>
-                </PlayDiv>
-                <PlayerDiv>
-                    <PlayersText>Current Players:</PlayersText>
-                    {playerList.map(player => {
-                        return (
-                            <>
-                            <PlayerCard name={player.name} points={player.points}/>
-                            </>
-                        )})}
-                </PlayerDiv>
-            </GameDiv>
-            
-            
-            
-        </div>
-    );
+        )
+    } else {
+        return (
+            <div className="App">
+                <Motion defaultStyle={{y: -200, opacity: 0}} style={{y: spring(0), opacity: spring(1)}}>
+                {(style) => (
+                <div style={{transform: `translateY(${style.y}px)`, opacity: style.opacity}}>
+                <GameHeader>
+                    <GameTitle>Guess the Tweeter</GameTitle>
+                    <GameImg src={TwitterIcon}/>
+                </GameHeader>
+                <GameSubTitle>A fun Twitter matching game!</GameSubTitle>
+                </div>
+                )}
+                </Motion>
+                <GameSetup>
+                    <LoginPlayerForm addPlayer={addPlayer} player={player} setPlayer={setPlayer} playerList={playerList} />
+                    <NewPlayerForm addPlayer={addPlayer} player={player} setPlayer={setPlayer} playerList={playerList} />
+                    <StartButton type="button" onClick={startGame}>Start Game</StartButton>
+                </GameSetup>
+                <GameDiv>
+                    <PlayDiv>
+                        <StatusScreen>
+                            <StatusText></StatusText>
+                            <TweetText>{tweet}</TweetText>
+                        </StatusScreen>
+                        <CandidateScreen>
+                            <CandidateList data={randomList} guess={guess} setGuess={setGuess} 
+                            playerList={playerList} setPlayerList={setPlayerList}
+                            gameStarted={gameStarted} setGameStarted={setGameStarted}
+                            turns={turns} setTurns={setTurns}
+                            currentPlayerID={currentPlayerID} setCurrentPlayerID={setCurrentPlayerID}
+                            mysteryCandidate={mysteryCandidate} setMysteryCandidate={setMysteryCandidate}
+                            setUpBoard={setUpBoard}
+                            setTurns={setTurns}
+                            />
+                        </CandidateScreen>
+                    </PlayDiv>
+                    <PlayerDiv>
+                        <PlayersText>Current Players:</PlayersText>
+                        {playerList.map(player => {
+                            return (
+                                <>
+                                <PlayerCard name={player.name} points={player.points}/>
+                                </>
+                            )})}
+                    </PlayerDiv>
+                </GameDiv>
+                
+                
+                
+            </div>
+        );
+    }
 }
 
 export default TwitterGame;
