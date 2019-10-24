@@ -55,21 +55,30 @@ class Login extends React.Component {
   if(this.props.loggedInUser.username === "" && this.props.loginOrRegister === "login") {
       return (
         <div>
-          <form onSubmit={e => this.login(e, this.state.credentials)}>
-            <input
-              type="text"
-              name="username"
-              value={this.state.credentials.username}
-              onChange={this.handleChange}
-            />
-            <input
-              type="password"
-              name="password"
-              value={this.state.credentials.password}
-              onChange={this.handleChange}
-            />
-            <button>Log In</button><br/>
-            <button name="register" type="button" onClick={this.GoToRegister}>Click Here to Sign Up</button>
+          <form onSubmit={e => this.login(e, this.state.credentials)} className="login-form">
+            <div className="input-div">
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                value={this.state.credentials.username}
+                onChange={this.handleChange}
+                style={{width: "23em", height: "2em", margin: ".2em 0"}}
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={this.state.credentials.password}
+                onChange={this.handleChange}
+                style={{width: "23em", height: "2em", margin: ".2em 0"}}
+              />
+            </div>
+            <div className="button-div">
+              <button class="form-button">Log In</button>
+              <button name="register" type="button" onClick={this.GoToRegister} class="form-button">Click Here to Sign Up</button>
+            </div>
+            
           </form>
         </div>
       );
@@ -81,7 +90,10 @@ class Login extends React.Component {
     } else {
       console.log("logged in");
       return (
-        <div>Logged in as {this.props.loggedInUser.username}</div>
+        <div className="welcome-div">
+          <p className="welcome-text">Welcome, {this.props.loggedInUser.username}! Thanks for logging in!</p>
+          <p className="welcome-text">Click Play Game to start your game!</p>
+        </div>
       )
       
     }
