@@ -156,7 +156,7 @@ function TwitterGame(props) {
 
     useEffect(() => {
         if (gameStarted === "ended") {
-            document.querySelector(StatusText).innerText = `Thanks for playing! Here are the winner(s): ${winnerCalc()} \n Hit refresh if you'd like to play again!`;
+            document.querySelector(StatusText).innerText = `Thanks for playing! Here are the winner(s): ${winnerCalc()} \n Check your dashboard to see your overall score and level!`;
             document.querySelector(StatusText).style.margin = "4.5em auto";
             document.querySelector(TweetText).style.display = "None";
         } else if (gameStarted === "started") {
