@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const CardDiv = styled.div`
     display: flex;
@@ -83,6 +84,14 @@ const CandidateCard = props => {
             props.setTweet("");
             props.setGameStarted("ended");
             props.loggedInUser.points += props.playerList[0].points;
+            axios
+            .put(`https://bw-guess-who.herokuapp.com/api/users/${props.loggedInUser.id}`, { points: props.loggedInUser.points })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log("There was an error:", error);
+            })
             // document.querySelector(StatusText).innerText = `Thanks for playing! Here are the winner(s): ${winnerCalc()} \n Hit refresh if you'd like to play again!`;
             // document.querySelector(StatusText).style.margin = "4.5em auto";
             // document.querySelector(TweetText).style.display = "None";
