@@ -39,7 +39,7 @@ const GameSubTitle = styled.p`
 `;
 
 const GameSetup = styled.div`
-
+    
 `;
 
 const StartButton = styled.button`
@@ -136,6 +136,7 @@ function TwitterGame(props) {
         points: 0
     });
     const [additionalUsers, setAdditionalUsers] = useState([]);
+    const [difficulty, setDifficulty] = useState(19);
 
     var x = 1;
 
@@ -165,15 +166,14 @@ function TwitterGame(props) {
             document.querySelector(GameSetup).style.display = "None";
         }
         
-        
     }, );
 
     function generateList() {
         // Duplicate Candidate Data
         var tempList = [...CandidateData];
 
-        // Shorten the list to 5
-        for (var i = 0; i < 17; i++) {
+        // Shorten the list to 6
+        for (var i = 0; i < Number(difficulty); i++) {
             tempList.splice(Math.floor(Math.random()*tempList.length),1)
         }
 
@@ -222,6 +222,36 @@ function TwitterGame(props) {
         return(winnerString + ` with ${score} points!`)
     }
 
+    const changeHandler = event => {
+        setDifficulty(event.target.value);
+    };
+
+    const difficultySelector = (level) => {
+        if (level === "Beginner") {
+            return (
+                <select id="difficulty-selector" onChange={changeHandler}>
+                    <option value="19">Beginner</option>
+                </select>
+            )
+        }
+        else if (level === "Intermediate") {
+            return (
+                <select id="difficulty-selector" onChange={changeHandler}>
+                    <option value="19">Beginner</option>
+                    <option value="17">Intermediate</option>
+                </select>
+            )
+        } else {
+            return (
+                <select id="difficulty-selector" onChange={changeHandler}>
+                    <option value="19">Beginner</option>
+                    <option value="17">Intermediate</option>
+                    <option value="15">Advanced</option>
+                </select>
+            )
+        }
+    }
+
     if (props.loggedInUser.username === "") {
         return(
         <div className="welcome-div">
@@ -245,6 +275,7 @@ function TwitterGame(props) {
                 <GameSetup>
                     <LoginPlayerForm addPlayer={addPlayer} player={player} setPlayer={setPlayer} playerList={playerList} additionalUsers={additionalUsers} setAdditionalUsers={setAdditionalUsers}/>
                     <NewPlayerForm addPlayer={addPlayer} player={player} setPlayer={setPlayer} playerList={playerList} />
+                    {difficultySelector(props.loggedInUser.level)}<br />
                     <StartButton type="button" onClick={startGame}>Start Game</StartButton>
                 </GameSetup>
                 <GameDiv>
