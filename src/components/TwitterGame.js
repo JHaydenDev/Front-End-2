@@ -135,6 +135,7 @@ function TwitterGame(props) {
         name: "",
         points: 0
     });
+    const [additionalUsers, setAdditionalUsers] = useState([]);
 
     var x = 1;
 
@@ -144,7 +145,6 @@ function TwitterGame(props) {
         })
     axios_instance.get(`https://arcane-headland-50299.herokuapp.com/${mysteryCandidate.twitter}`)
     .then(response=>{
-        console.log(response.data);
         setTweet(response.data.statuses[0].text);
     })
     .catch(error => {
@@ -163,9 +163,8 @@ function TwitterGame(props) {
             document.querySelector(StatusText).innerText = `It is ${playerList[currentPlayerID].name}'s turn! Please select which candidate you believe tweeted the below tweet:`;
             document.querySelector(TweetText).style.display = "flex";
             document.querySelector(GameSetup).style.display = "None";
-        } else {
-            console.log("nothing");
         }
+        
         
     }, );
 
@@ -244,7 +243,7 @@ function TwitterGame(props) {
                 )}
                 </Motion>
                 <GameSetup>
-                    <LoginPlayerForm addPlayer={addPlayer} player={player} setPlayer={setPlayer} playerList={playerList} />
+                    <LoginPlayerForm addPlayer={addPlayer} player={player} setPlayer={setPlayer} playerList={playerList} additionalUsers={additionalUsers} setAdditionalUsers={setAdditionalUsers}/>
                     <NewPlayerForm addPlayer={addPlayer} player={player} setPlayer={setPlayer} playerList={playerList} />
                     <StartButton type="button" onClick={startGame}>Start Game</StartButton>
                 </GameSetup>
@@ -265,6 +264,7 @@ function TwitterGame(props) {
                             setTurns={setTurns}
                             setTweet={setTweet}
                             loggedInUser={props.loggedInUser} setLoggedInUser={props.setLoggedInUser}
+                            additionalUsers={additionalUsers} setAdditionalUsers={setAdditionalUsers}
                             />
                         </CandidateScreen>
                     </PlayDiv>
