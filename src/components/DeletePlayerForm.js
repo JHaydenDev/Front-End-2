@@ -25,33 +25,18 @@ const DeleteButton = styled.button`
     color: white;
 `;
 
-const validate = ({username, password}) => {
-    const errors = {};
-    // validate username
-    if (!username) {
-        errors.username = "Please enter your username.";
-    } else if (username.length < 3) {
-        errors.username = "You need a longer username";
-    }
-    // validate password
-    if (!password) {
-        errors.password = "Please enter your password";
-    } else if (password.length < 3) {
-        errors.password = "Please enter a longer password"
-    }
-
-    return errors;
-}
-
 const DeletePlayerForm = props => {
     const [message, setMessage] = useState('');
     const handleSubmit = (values, tools) => {
-        //axios.post('https://arcane-headland-50299.herokuapp.com/login', values)
-        axios.delete(`https://bw-guess-who.herokuapp.com/api/users/`, { data: props.loggedInUser })
+        axios.delete(`https://bw-guess-who.herokuapp.com/api/users/${props.loggedInUser.id}`)
         .then(response => {
             console.log(response);
-            // var returnedUser = response.data.user;
-            // props.setLoggedInUser("");
+            props.setLoggedInUser({
+                id: 0,
+                level: "",
+                points: 0,
+                username: "",
+            });
         })
         .catch(error => {
             setMessage("Incorrect username / password");
@@ -65,20 +50,12 @@ const DeletePlayerForm = props => {
     return (
         <Formik 
         onSubmit={handleSubmit}
-        validate={validate}
-        initialValues={{username: "", password: ""}}
         render={props => {
             return(
                 <DeleteDiv>
                 <div>{message}</div>
                 <Form>
-                    <Field name="username" type="text" placeholder="Username" style={{width: "13em", margin: ".5em", height: "1.5em"}}/><br />
-                    <ErrorMessage name="username" component="div" style={{color: "red"}}/>
-                    <Field name="password" type="password" placeholder="Password" style={{width: "13em", margin: ".5em", height: "1.5em"}} /><br />
-                    <ErrorMessage name="password" component="div" style={{color: "red"}}/>
-
-                    <DeleteButton type="submit" disabled={props.isSubmitting} style={{margin: "0 0 .5em 0"}}>{props.isSubmitting ? "Authenticating" : "Delete Account"}</DeleteButton>
-
+                    <DeleteButton type="submit" style={{margin: "0 0 .5em 0"}}>Delete Account</DeleteButton>
                 </Form>
                 </DeleteDiv>
             )
