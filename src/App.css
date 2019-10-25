@@ -51,6 +51,7 @@ nav{
   border-radius: .2em;
   background-color: #1DA1F2;
   color: white;
+  cursor: pointer;
 }
 
 .login-form {
