@@ -6,7 +6,8 @@ class SignUp extends React.Component {
     credentials: {
       username: "",
       password: ""
-    }
+    },
+    message: "",
   };
 
   handleChange = e => {
@@ -38,8 +39,12 @@ class SignUp extends React.Component {
           username: info.username,
         })
         console.log(this.props.loggedInUser);
+        this.setState({message:``});
       })
-      .catch(err => console.log(err.response));
+      .catch(err => {
+        console.log(err.response)
+        this.setState({message:`User already exists`});
+      });
   };
 
   GoToLogin = () => {
@@ -52,6 +57,7 @@ class SignUp extends React.Component {
     return (
       <div>
         <form onSubmit={e => this.login(e, this.state.credentials)} className="login-form">
+        <div style={{color: "red"}}>{this.state.message}</div>
           <div className="input-div">
             <input
               type="text"
