@@ -59,6 +59,7 @@ const LoginPlayersForm = props => {
             tools.resetForm();
             props.addPlayer({ id: (props.player.id), name: returnedUser.username, points: 0 });
             props.setPlayer({ id: (props.player.id+1) ,name: "", points: 0 });
+            props.setAdditionalUsers([...props.additionalUsers, returnedUser]);
             }
         })
         .catch(error => {

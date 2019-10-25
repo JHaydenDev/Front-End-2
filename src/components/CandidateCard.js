@@ -61,6 +61,52 @@ const CandidateCard = props => {
             props.setTurns(props.turns - 1 );
         }
     }
+
+    function sendPointsAndUpdateLevel(account) {
+        // Find account in playerlist by username
+        var playerListAccount = props.playerList.find(function(player) {
+            return player.name === account.username;
+        });
+        
+        // update the point values of the account
+        account.points += playerListAccount.points;
+
+        // send points to server
+        axios
+        .put(`https://bw-guess-who.herokuapp.com/api/users/${account.id}`, { points: account.points })
+        .then(response => {
+            console.log(`updated points for ${account.username}`);
+        })
+        .catch(error => {
+            console.log(`There was an error for ${account.username}`, error);
+        })
+
+        // if the account has more than 10 points upgrade him to Intermediate
+        if (account.points >= 10 && account.level === "Beginner") {
+            account.level = "Intermediate";
+            axios
+            .put(`https://bw-guess-who.herokuapp.com/api/users/${account.id}`, { level: "Intermediate" })
+            .then(response => {
+                console.log(`updated level for ${account.username}`);
+            })
+            .catch(error => {
+                console.log(`There was an error for ${account.username}`, error);
+            })
+        }
+
+        // if the account has more than 30 points upgrade him to Advanced
+        if (account.points >= 30 && account.level === "Intermediate") {
+            account.level = "Advanced";
+            axios
+            .put(`https://bw-guess-who.herokuapp.com/api/users/${account.id}`, { level: "Advanced" })
+            .then(response => {
+                console.log(`updated level for ${account.username}`);
+            })
+            .catch(error => {
+                console.log(`There was an error for ${account.username}`, error);
+            })
+        }
+    }
     
     function tryGuess() {
         props.setGuess(props.name);
@@ -68,59 +114,27 @@ const CandidateCard = props => {
         if (props.name === props.mysteryCandidate.name && props.turns > 0) {
             alert(`Correct! Your guess was: ${props.name}.`);
             props.setUpBoard();
-            console.log(`THIS IS THE PLAYER LIST: ${props.playerList}`);
-            console.log(`THIS IS THE PLAYER ID YOU WANT TO UPDATE ${props.playerList[props.currentPlayerID]}`);
-            console.log(props.playerList[props.currentPlayerID]);
-            console.log(`THESE ARE HIS POINTS: ${props.playerList[props.currentPlayerID].points}`);
             props.playerList[props.currentPlayerID].points += 1;
             handleTurn()
         } else if (props.turns > 0) {
             alert(`Incorrect! Your guess was ${props.name}. The correct answer was ${props.mysteryCandidate.name}.`);
             props.setUpBoard();
-            console.log("guessed incorrectly");
             handleTurn()
         } else {
+            // the game is over
             // reset the candidate list and tweets
             props.setRandomList([]);
             props.setTweet("");
             // set the game to ended
             props.setGameStarted("ended");
-            // update the point values for the host
-            props.loggedInUser.points += props.playerList[0].points;
-            // sent points to server
-            axios
-            .put(`https://bw-guess-who.herokuapp.com/api/users/${props.loggedInUser.id}`, { points: props.loggedInUser.points })
-            .then(response => {
-                console.log(response);
-            })
-            .catch(error => {
-                console.log("There was an error:", error);
-            })
-            // if the host has more than 10 points upgrade him to Intermediate
-            if (props.loggedInUser.points >= 10 && props.loggedInUser.level === "Beginner") {
-                props.loggedInUser.level = "Intermediate";
-                axios
-                .put(`https://bw-guess-who.herokuapp.com/api/users/${props.loggedInUser.id}`, { level: "Intermediate" })
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(error => {
-                    console.log("There was an error:", error);
-                })
-            }
 
-            // if the host has more than 30 points upgrade him to Advanced
-            if (props.loggedInUser.points >= 30 && props.loggedInUser.level === "Intermediate") {
-                props.loggedInUser.level = "Advanced";
-                axios
-                .put(`https://bw-guess-who.herokuapp.com/api/users/${props.loggedInUser.id}`, { level: "Advanced" })
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(error => {
-                    console.log("There was an error:", error);
-                })
-            }
+            // update stats for the host
+            sendPointsAndUpdateLevel(props.loggedInUser);
+
+            // update stats for additional users
+            props.additionalUsers.forEach(function(user) {
+                sendPointsAndUpdateLevel(user);
+            })
         }
     }
 

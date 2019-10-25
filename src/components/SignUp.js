@@ -30,7 +30,6 @@ class SignUp extends React.Component {
       .then(res => {
         localStorage.setItem("token", res.data.payload) ; console.log(res, "this");
         // this.props.history.push("/protected");
-        console.log(res)
         var info = res.data;
         this.props.setLoggedInUser({
           id: info.id,
@@ -38,7 +37,6 @@ class SignUp extends React.Component {
           points: info.points,
           username: info.username,
         })
-        console.log(this.props.loggedInUser);
         this.setState({message:``});
       })
       .catch(err => {
@@ -49,7 +47,6 @@ class SignUp extends React.Component {
 
   GoToLogin = () => {
     this.props.setLoginOrRegister("login");
-    console.log(this.props.loginOrRegister);
   }
 
   render() {
