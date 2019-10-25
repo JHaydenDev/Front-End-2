@@ -5,7 +5,29 @@ import TwitterIcon from "../images/TwitterIcon.png";
 
 
 // Navigation bar components
-function Nav() {
+function Nav(props) {
+
+    const logOut = () => {
+        props.setLoggedInUser({
+            id: 0,
+            level: "",
+            points: 0,
+            username: "",
+        });
+    }
+
+    const logOutButton = () => {
+        if (props.loggedInUser.username !== "") {
+            return (
+                <a onClick={logOut} className="navbar-button">Logout</a>
+            )
+        } else {
+            return (
+                <Link to="/" className="navbar-button">Login/Signup</Link>
+            )
+        }
+    }
+
     return (
         <Route>
         <nav>
@@ -13,7 +35,7 @@ function Nav() {
             <ul className="nav-links">
                 <Link to="/Dashboard" className="navbar-button">Dashboard</Link>
                 <Link to="/TwitterGame" className="navbar-button">Play Game</Link>
-                <Link to="/" className="navbar-button">Login/Signup</Link>
+                {logOutButton()}
             </ul>
         </nav>
         </Route>

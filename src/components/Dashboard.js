@@ -10,6 +10,8 @@ const Dashboard = props => {
             </div>
         )
     }
+
+
     return (
         <div className="dashboard-div">
             <h2 className="dashboard-header">
