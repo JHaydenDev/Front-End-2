@@ -80,10 +80,14 @@ const CandidateCard = props => {
             console.log("guessed incorrectly");
             handleTurn()
         } else {
+            // reset the candidate list and tweets
             props.setRandomList([]);
             props.setTweet("");
+            // set the game to ended
             props.setGameStarted("ended");
+            // update the point values for the host
             props.loggedInUser.points += props.playerList[0].points;
+            // sent points to server
             axios
             .put(`https://bw-guess-who.herokuapp.com/api/users/${props.loggedInUser.id}`, { points: props.loggedInUser.points })
             .then(response => {
@@ -92,9 +96,31 @@ const CandidateCard = props => {
             .catch(error => {
                 console.log("There was an error:", error);
             })
-            // document.querySelector(StatusText).innerText = `Thanks for playing! Here are the winner(s): ${winnerCalc()} \n Hit refresh if you'd like to play again!`;
-            // document.querySelector(StatusText).style.margin = "4.5em auto";
-            // document.querySelector(TweetText).style.display = "None";
+            // if the host has more than 10 points upgrade him to Intermediate
+            if (props.loggedInUser.points >= 10 && props.loggedInUser.level === "Beginner") {
+                props.loggedInUser.level = "Intermediate";
+                axios
+                .put(`https://bw-guess-who.herokuapp.com/api/users/${props.loggedInUser.id}`, { level: "Intermediate" })
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log("There was an error:", error);
+                })
+            }
+
+            // if the host has more than 30 points upgrade him to Advanced
+            if (props.loggedInUser.points >= 30 && props.loggedInUser.level === "Intermediate") {
+                props.loggedInUser.level = "Advanced";
+                axios
+                .put(`https://bw-guess-who.herokuapp.com/api/users/${props.loggedInUser.id}`, { level: "Advanced" })
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log("There was an error:", error);
+                })
+            }
         }
     }
 

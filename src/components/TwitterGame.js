@@ -138,25 +138,6 @@ function TwitterGame(props) {
 
     var x = 1;
 
-    // function updateVariables() {
-    //     if (gameStarted === "ended") {
-    //         setRandomList([]);
-    //         setTweet("");
-    //         document.querySelector(StatusText).innerText = `Thanks for playing! Here are the winner(s): ${winnerCalc()} \n Hit refresh if you'd like to play again!`;
-    //         document.querySelector(StatusText).style.margin = "4.5em auto";
-    //         document.querySelector(TweetText).style.display = "None";
-    //     } else if (gameStarted === "started") {
-    //     setTimeout(function() {
-
-    //             // Update the top message
-    //             document.querySelector(StatusText).innerText = `It is ${playerList[currentPlayerID].name}'s turn! Please select which candidate you believe tweeted the below tweet:`;
-    //             document.querySelector(TweetText).style.display = "flex";
-    //             document.querySelector(GameSetup).style.display = "None";
-    //     }, 10)
-    //     }
-    // }
-    // updateVariables();
-
     useEffect(() => {
     var axios_instance = axios.create({
         withCredentials: false
