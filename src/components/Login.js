@@ -31,9 +31,6 @@ class Login extends React.Component {
       .then(res => {
         // localStorage.setItem("token", res.data.payload) ; console.log(res, "this");
         // this.props.history.push("/protected");
-        // console.log("wooooooowwwww", res)
-        console.log(this.props.loggedInUser);
-        console.log(res.data.user);
         var info = res.data.user;
         this.props.setLoggedInUser({
             id: info.id,
@@ -41,7 +38,6 @@ class Login extends React.Component {
             points: info.points,
             username: info.username,
         })
-        console.log(this.props.loggedInUser);
         this.setState({message:``});
       })
       .catch(err => {
@@ -52,7 +48,6 @@ class Login extends React.Component {
 
   GoToRegister = () => {
     this.props.setLoginOrRegister("register");
-    console.log(this.props.loginOrRegister);
   }
 
 
@@ -94,7 +89,6 @@ class Login extends React.Component {
       )
 
     } else {
-      console.log("logged in");
       return (
         <div className="welcome-div">
           <p className="welcome-text">Welcome, {this.props.loggedInUser.username}! Thanks for logging in!</p>

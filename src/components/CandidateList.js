@@ -26,6 +26,7 @@ function CandidateList(props) {
                 randomList={props.data} setRandomList={props.setRandomList}
                 setTweet={props.setTweet}
                 loggedInUser={props.loggedInUser} setLoggedInUser={props.setLoggedInUser}
+                additionalUsers={props.additionalUsers} setAdditionalUsers={props.setAdditionalUsers}
                 />
                 </>
             )
