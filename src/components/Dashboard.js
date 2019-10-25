@@ -5,18 +5,21 @@ import DeletePlayerForm from "./DeletePlayerForm";
 const Dashboard = props => {
     if (props.loggedInUser.username === "") {
         return (
-            <div>
-                <p>Please Login to view the Dashboard</p>
+            <div className="unlogged-dashboard-div">
+                <p className="dashboard-text">Please Login to view the Dashboard</p>
             </div>
         )
     }
     return (
-        <div>
-            <p>
-                Welcome, {props.loggedInUser.username}!
+        <div className="dashboard-div">
+            <h2 className="dashboard-header">
+                Welcome to your dashboard, {props.loggedInUser.username}!
+            </h2>
+            <p className="dashboard-text">
+               Your overall score is: {props.loggedInUser.points}
             </p>
-            <p>
-               Your overall points: {props.loggedInUser.points}
+            <p className="dashboard-text">
+                Your level is: {props.loggedInUser.level}
             </p>
             <DeletePlayerForm loggedInUser={props.loggedInUser} setLoggedInUser={props.setLoggedInUser}/>
         </div>

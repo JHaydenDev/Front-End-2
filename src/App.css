@@ -91,6 +91,36 @@ nav{
 
 .welcome-text {
   font-family: 'Roboto', sans-serif;  
-  font-size: 1rem;
+  font-size: 1.2rem;
+}
+
+.dashboard-div {
+  display: flex;
+  flex-direction: column;
+  margin: 5em auto;
+  width: 40em;
+  height: 18em;
+  border: 1px solid black;
+  border-radius: 1em;
+  align-items: center;
+}
+
+.unlogged-dashboard-div {
+  display: flex;
+  flex-direction: column;
+  margin: 5em auto;
+  width: 40em;
+  height: 18em;
+  align-items: center;
+}
+
+.dashboard-header {
+  font-family: 'Patua One', cursive;
+  font-size: 1.5rem;
+}
+
+.dashboard-text {
+  font-family: 'Roboto', sans-serif;  
+  font-size: 1.2rem;
 }
 
