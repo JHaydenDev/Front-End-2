@@ -40,6 +40,17 @@ var app = express()
 
 app.use(express.json()) // for parsing application/json
 
+if (process.env.NODE_ENV === 'production') {
+    // Exprees will serve up production assets
+    app.use(express.static('client/build'));
+  
+    // Express serve up index.html file if it doesn't recognize route
+    const path = require('path');
+    app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+  }
+
 // from https://stackoverflow.com/a/52759059
 app.use('*', function(req, res, next) {
 res.header("Access-Control-Allow-Origin", "*");
