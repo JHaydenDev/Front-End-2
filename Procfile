@@ -1,1 +1,1 @@
-web: node src/components/myscript.js
+web: web: bin/boot
